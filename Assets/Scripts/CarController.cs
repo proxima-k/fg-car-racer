@@ -7,10 +7,10 @@ public class CarController : MonoBehaviour {
     private Rigidbody2D _carRigidBody2D;
     [SerializeField] private GameInput _gameInput;
 
-    [SerializeField] private float _maxSpeed = 100f;
-    [SerializeField] private float _accelerateStrength = 10f;
+    [SerializeField] private float _maxSpeed = 50f;
+    [SerializeField] private float _accelerateStrength = 5f;
     [SerializeField] private float _steerStrength = 3f;
-    [SerializeField] [Range(0.1f, 1f)] private float _driftStrength = 0.5f;
+    [SerializeField] [Range(0.1f, 1f)] private float _driftStrength = 0.92f;
 
     private float _accelerateInput;
     private float _steerInput;
