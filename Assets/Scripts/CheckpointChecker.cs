@@ -2,42 +2,64 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckpointChecker : MonoBehaviour {
-    [SerializeField] private Rigidbody2D _rigidbody2D;
-    private Vector2 test = Vector2.zero;
+
+    [SerializeField] private int _currentProgressIndex;
+    [SerializeField] private int _lastIndex;
+
+    [SerializeField] private int _currentLap = 0;
+    
+    // event for wrong way
+    // this is for the UI or Debugger to know that the car is going in the wrong direction
+    public event EventHandler OnGoingWrongPath;
+    
+    // event for right way (which notifies the rank manager)
+    // public event EventHandler
+    public event EventHandler OnGoingRightPath;
+    public event EventHandler OnStartingNewLap;
     
     private void Start() {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        // get the last index of the checkpoints from a manager script
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Inside something");
-        Debug.Log(other.gameObject);
+        if (other.TryGetComponent(out Checkpoint checkpoint)) {
+            int collidedCheckpointIndex = checkpoint.Index;
+            
+            if (_currentProgressIndex == collidedCheckpointIndex)
+                return;
+            
+            // going the wrong way
+            
+            
+            /* going the right way means
+                 if current progress index is larger by 1
+                 if current progress index is at last index and collided index is at 0
+            */
+            if (collidedCheckpointIndex < _currentProgressIndex && !hasPassedLastCheckpoint()) {
+                Debug.Log("Wrong checkpoint!");
+                OnGoingWrongPath?.Invoke(this, EventArgs.Empty);
+                return;
+            }
+            
+            if (_currentProgressIndex + 1 == collidedCheckpointIndex) {
+                _currentProgressIndex = collidedCheckpointIndex;
+                OnGoingRightPath?.Invoke(this, EventArgs.Empty);
+                Debug.Log($"Correct checkpoint! {collidedCheckpointIndex}");
+            } else if (collidedCheckpointIndex == 0 && hasPassedLastCheckpoint()) {
+                _currentProgressIndex = collidedCheckpointIndex;
+                _currentLap++;
+                OnStartingNewLap?.Invoke(this, EventArgs.Empty);
+                Debug.Log($"Correct checkpoint! {collidedCheckpointIndex}");
+                Debug.Log($"New Lap! {_currentLap}");
+            }
+            
+        }
+    }
+
+    private bool hasPassedLastCheckpoint() {
+        return _currentProgressIndex == _lastIndex;
     }
 }
-
-
-
-// has a list of cars
-// function that process car positions
-// store a list that has the cars' position in order
-// has a event that send to the UI to tell it to update the order
-//
-// Things I would need:
-// A Leaderboard UI script that handles the leading
-//
-// an event that contains information about cars position
-//     with this, individual cars can handle their own UI
-//
-// the event would be invoked every time a checkpoint is passed
-//     should be careful with the event being invoked multiple times in one frame.
-//     maybe use a queue for updating to make it safe
-//     or look up if events invocation could happen simultaneously
-//
-// I need something to identify the cars
-//     a script that is called car?
-//     perhaps the car script contains stats about the cars?
-//     i suppose it makes sense to have a car controller as identifier since bots and humans need to control the car
-//     with the control script
-
