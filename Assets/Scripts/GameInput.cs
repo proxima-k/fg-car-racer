@@ -9,16 +9,9 @@ public class GameInput : MonoBehaviour {
     private void Awake() {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
+        
+        // _playerInputActions.
     }
-    
-
-    // public Vector2 GetMovementDirection() {
-    //     Vector2 inputVector = _playerInputActions.Player.Drive.ReadValue<Vector2>();
-    //
-    //     inputVector = inputVector.normalized;
-    //     
-    //     return inputVector;
-    // }
 
     public float GetAccelerateInput() {
         return _playerInputActions.Player.Accelerate.ReadValue<float>();
