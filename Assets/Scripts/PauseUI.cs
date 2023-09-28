@@ -14,8 +14,21 @@ public class PauseUI : MonoBehaviour {
             // game manager toggle pause
         // _mainMenuButton.onClick.AddListener();
     }
-
+    
+    
     private void Start() {
+        GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
+        GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;
+        _resumeButton.onClick.AddListener(GameManager.Instance.TogglePauseGame);
+        
+        Hide();
+    }
+
+    private void GameManager_OnGamePaused(object sender, EventArgs e) {
+        Show();
+    }
+    
+    private void GameManager_OnGameUnpaused(object sender, EventArgs e) {
         Hide();
     }
 

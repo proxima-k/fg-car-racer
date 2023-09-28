@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour {
     private PlayerInputActions _playerInputActions;
@@ -10,7 +8,11 @@ public class GameInput : MonoBehaviour {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
         
-        // _playerInputActions.
+        _playerInputActions.Player.PauseGame.performed += Player_OnPauseGame;
+    }
+
+    private void Player_OnPauseGame(InputAction.CallbackContext obj) {
+        GameManager.Instance.TogglePauseGame();
     }
 
     public float GetAccelerateInput() {
