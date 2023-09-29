@@ -2,24 +2,19 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class PauseUI : MonoBehaviour {
 
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _mainMenuButton;
 
     private void Awake() {
-        // _resumeButton.onClick.AddListener();
-            // game manager toggle pause
-        // _mainMenuButton.onClick.AddListener();
     }
-    
-    
+
     private void Start() {
+        _resumeButton.onClick.AddListener(GameManager.Instance.TogglePauseGame);
+        _mainMenuButton.onClick.AddListener(SceneHandler.Instance.LoadMainMenuScene);
         GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
         GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;
-        _resumeButton.onClick.AddListener(GameManager.Instance.TogglePauseGame);
         
         Hide();
     }
@@ -38,5 +33,12 @@ public class PauseUI : MonoBehaviour {
 
     private void Hide() {
         gameObject.SetActive(false);
+    }
+
+    private void OnDestroy() {
+        _resumeButton.onClick.RemoveListener(GameManager.Instance.TogglePauseGame);
+        _mainMenuButton.onClick.RemoveListener(SceneHandler.Instance.LoadMainMenuScene);
+        GameManager.Instance.OnGamePaused -= GameManager_OnGamePaused;
+        GameManager.Instance.OnGameUnpaused -= GameManager_OnGameUnpaused;
     }
 }

@@ -14,4 +14,5 @@ public static class Logger  {
         Debug.LogError(message);
     }
 }
+
 #endif

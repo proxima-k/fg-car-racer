@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,12 +24,15 @@ public class GameInput : MonoBehaviour {
         return _playerInputActions.Player.Steer.ReadValue<float>();
     }
     
-    
     private void OnEnable() {
         _playerInputActions.Player.Enable();
     }
 
     private void OnDisable() {
+        _playerInputActions.Player.Disable();
+    }
+
+    private void OnDestroy() {
         _playerInputActions.Player.Disable();
     }
 }
