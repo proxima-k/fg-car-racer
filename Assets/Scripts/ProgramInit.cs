@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public static class GameInit {
+public static class ProgramInit {
 
     [RuntimeInitializeOnLoadMethod]
     public static void Initialize() {

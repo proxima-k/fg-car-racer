@@ -53,6 +53,7 @@ public class SceneHandler : MonoBehaviour {
                     GameManager.Instance.SetGameMode(_gameMode);
                     return;
                 }
+                
             }
         }
     }

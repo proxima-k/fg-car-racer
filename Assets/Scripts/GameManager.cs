@@ -60,23 +60,23 @@ public class GameManager : MonoBehaviour {
     private void PlayerInitialization() {
         PlayerInput playerInputPrefab = Resources.Load<PlayerInput>("Prefabs/Car");
         PlayerInput playerInput;
-        
+
+        Vector3[] startingPositions = MapSettings.Instance.GetStartingPositions();
         switch (_gameMode) {
             case GameMode.OnePlayer:
                 // create single player
                 // create a global instance that marks the starting position of the map
-                playerInput = Instantiate(playerInputPrefab);
+                playerInput = Instantiate(playerInputPrefab, startingPositions[0], Quaternion.identity);
                 playerInput.SetControlScheme("Player1");
                 break;
                     
             case GameMode.TwoPlayer:
-                Debug.Log("Two player mode");
                 // Player 1 instantiation
-                playerInput = Instantiate(playerInputPrefab);
+                playerInput = Instantiate(playerInputPrefab, startingPositions[0], Quaternion.identity);
                 playerInput.SetControlScheme("Player1");
                         
                 // Player 2 instantiation
-                playerInput = Instantiate(playerInputPrefab);
+                playerInput = Instantiate(playerInputPrefab, startingPositions[1], Quaternion.identity);
                 playerInput.SetControlScheme("Player2");
                 break;
                     
