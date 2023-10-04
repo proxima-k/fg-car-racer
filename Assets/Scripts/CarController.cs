@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour {
     private Rigidbody2D _carRigidBody2D;
-    [SerializeField] private GameInput _gameInput;
+    [SerializeField] private PlayerInput _playerInput;
 
     [SerializeField] private float _maxSpeed = 50f;
     [SerializeField] private float _accelerateStrength = 5f;
@@ -18,12 +18,12 @@ public class CarController : MonoBehaviour {
     
     private void Start() {
         _carRigidBody2D = GetComponent<Rigidbody2D>();
-        // _gameInput.
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update() {
-        _accelerateInput = _gameInput.GetAccelerateInput();
-        _steerInput = _gameInput.GetSteerInput();
+        _accelerateInput = _playerInput.GetAccelerateInput();
+        _steerInput = _playerInput.GetSteerInput();
     }
 
     void FixedUpdate() {

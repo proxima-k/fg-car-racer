@@ -6,13 +6,15 @@ public class PauseUI : MonoBehaviour {
 
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _mainMenuButton;
-
+    [SerializeField] private GameObject _pauseUI;
+    
     private void Awake() {
     }
 
     private void Start() {
         _resumeButton.onClick.AddListener(GameManager.Instance.TogglePauseGame);
         _mainMenuButton.onClick.AddListener(SceneHandler.Instance.LoadMainMenuScene);
+        _mainMenuButton.onClick.AddListener(GameManager.Instance.TogglePauseGame);
         GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
         GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;
         
@@ -28,16 +30,17 @@ public class PauseUI : MonoBehaviour {
     }
 
     private void Show() {
-        gameObject.SetActive(true);
+        _pauseUI.SetActive(true);
     }
 
     private void Hide() {
-        gameObject.SetActive(false);
+        _pauseUI.SetActive(false);
     }
 
     private void OnDestroy() {
         _resumeButton.onClick.RemoveListener(GameManager.Instance.TogglePauseGame);
         _mainMenuButton.onClick.RemoveListener(SceneHandler.Instance.LoadMainMenuScene);
+        _mainMenuButton.onClick.RemoveListener(GameManager.Instance.TogglePauseGame);
         GameManager.Instance.OnGamePaused -= GameManager_OnGamePaused;
         GameManager.Instance.OnGameUnpaused -= GameManager_OnGameUnpaused;
     }
