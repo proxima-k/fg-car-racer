@@ -8,8 +8,10 @@ public class GameManager : MonoBehaviour {
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
 
+        
     private bool isGamePaused;
-    
+
+    public GameMode GameMode => _gameMode;
     [SerializeField] private GameMode _gameMode = GameMode.OnePlayer;
     
     public enum GameState {
@@ -33,7 +35,9 @@ public class GameManager : MonoBehaviour {
         switch (_gameState) {
             // Initialize everything needed for the game
             case GameState.Initialize:
+                ScriptsInitialization();
                 PlayerInitialization();
+                
                 _gameState = GameState.Countdown;
                 break;
             
@@ -57,26 +61,32 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void ScriptsInitialization() {
+        GameInput gameInput = Resources.Load<GameInput>("Prefabs/GameInput");
+        Instantiate(gameInput);
+    }
+
     private void PlayerInitialization() {
         PlayerInput playerInputPrefab = Resources.Load<PlayerInput>("Prefabs/Car");
         PlayerInput playerInput;
-
+        
         Vector3[] startingPositions = MapSettings.Instance.GetStartingPositions();
+        Quaternion[] startingRotations = MapSettings.Instance.GetStartingRotations();
         switch (_gameMode) {
             case GameMode.OnePlayer:
                 // create single player
                 // create a global instance that marks the starting position of the map
-                playerInput = Instantiate(playerInputPrefab, startingPositions[0], Quaternion.identity);
+                playerInput = Instantiate(playerInputPrefab, startingPositions[0], startingRotations[0]);
                 playerInput.SetControlScheme("Player1");
                 break;
                     
             case GameMode.TwoPlayer:
                 // Player 1 instantiation
-                playerInput = Instantiate(playerInputPrefab, startingPositions[0], Quaternion.identity);
+                playerInput = Instantiate(playerInputPrefab, startingPositions[0], startingRotations[0]);
                 playerInput.SetControlScheme("Player1");
                         
                 // Player 2 instantiation
-                playerInput = Instantiate(playerInputPrefab, startingPositions[1], Quaternion.identity);
+                playerInput = Instantiate(playerInputPrefab, startingPositions[1], startingRotations[1]);
                 playerInput.SetControlScheme("Player2");
                 break;
                     

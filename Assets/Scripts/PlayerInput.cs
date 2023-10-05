@@ -20,6 +20,11 @@ public class PlayerInput : MonoBehaviour {
     public float GetSteerInput() {
         return _playerInputActions.Player.Steer.ReadValue<float>();
     }
+
+    public bool GetNitroInput() {
+        // return _playerInputActions.Player.
+        return false;
+    }
     
     private void OnEnable() {
         _playerInputActions.Player.Enable();

@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,6 +11,7 @@ public class MapSettings : MonoBehaviour {
         Vertical,
         Horizontal
     }
+    // clockwise or anticlockwise
 
     [SerializeField] private FacingDirection _facingDirection = FacingDirection.Vertical;
 
@@ -20,10 +22,6 @@ public class MapSettings : MonoBehaviour {
             return;
         }
         Instance = this;
-    }
-
-    private void Start() {
-        GetStartingPositions();
     }
 
     public Vector3[] GetStartingPositions() {
@@ -48,5 +46,19 @@ public class MapSettings : MonoBehaviour {
         Debug.Log(carStartingPositions[0]);
         Debug.Log(carStartingPositions[1]);
         return carStartingPositions;
+    }
+
+    public Quaternion[] GetStartingRotations() {
+        Quaternion[] carStartingRotations = new Quaternion[2];
+
+        if (_facingDirection == FacingDirection.Horizontal) {
+            carStartingRotations[0] = Quaternion.Euler(0, 0, 90);
+            carStartingRotations[1] = Quaternion.Euler(0, 0, 90);
+            return carStartingRotations;
+        }
+
+        carStartingRotations[0] = Quaternion.identity;
+        carStartingRotations[1] = Quaternion.identity;
+        return carStartingRotations;
     }
 }

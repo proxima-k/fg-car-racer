@@ -4,16 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CarController : MonoBehaviour {
+
+    public event EventHandler<OnFuelChangedEventArgs> OnFuelChanged;
+    public class OnFuelChangedEventArgs : EventArgs {
+        public float fuel;
+    }
+    
     private Rigidbody2D _carRigidBody2D;
     [SerializeField] private PlayerInput _playerInput;
 
-    [SerializeField] private float _maxSpeed = 50f;
+    // Car Control Settings
+    [SerializeField] private float _defaultMaxSpeed = 50f;
     [SerializeField] private float _accelerateStrength = 5f;
     [SerializeField] private float _steerStrength = 3f;
     [SerializeField] [Range(0.1f, 1f)] private float _driftStrength = 0.92f;
 
+    // Nitro Settings
+    [SerializeField] private float _fuelBurnSpeed = 10f;
+    [SerializeField] private float _maxFuel = 100;
+    [SerializeField] private float _bonusSpeed = 10f;
+    [SerializeField] private float _bonusAcceleration = 3f;
+    private float _currentFuel = 50f;
+
     private float _accelerateInput;
     private float _steerInput;
+    private bool _fuelPress;
     
     
     private void Start() {
@@ -27,7 +42,6 @@ public class CarController : MonoBehaviour {
     }
 
     void FixedUpdate() {
-
         Accelerate();
         Drift();
         
@@ -35,10 +49,18 @@ public class CarController : MonoBehaviour {
         Drag();
     }
 
+    private void AddFuel(float value) {
+        _currentFuel += value;
+        if (_currentFuel > _maxFuel) {
+            _currentFuel = _maxFuel;
+        }
+        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuel = _currentFuel});
+    }
     
     private void Accelerate() {
-
-        if (_carRigidBody2D.velocity.magnitude > _maxSpeed)
+        // float maxSpeed = _defaultMaxSpeed + (_bonusSpeed * )
+        
+        if (_carRigidBody2D.velocity.magnitude > _defaultMaxSpeed)
             return;
         
         Vector2 accelerateForce = transform.up * (_accelerateStrength * _accelerateInput);

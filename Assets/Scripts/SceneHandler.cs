@@ -6,7 +6,7 @@ public class SceneHandler : MonoBehaviour {
     
     private GameSettings _gameSettings;
     private GameMode _gameMode;
-    
+    private bool _gameLoadedFromMenu;
     
     private void Awake() {
         if (Instance != null) {
@@ -31,8 +31,9 @@ public class SceneHandler : MonoBehaviour {
     }
 
     public void LoadGameScene(GameMode gameMode, string sceneName) {
-        SceneManager.LoadScene(sceneName);
         _gameMode = gameMode;
+        _gameLoadedFromMenu = true;
+        SceneManager.LoadScene(sceneName);
     }
     
     private void SceneManager_OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode) {
@@ -50,14 +51,19 @@ public class SceneHandler : MonoBehaviour {
                 if (GameManager.Instance == null) {
                     Debug.Log("Game manager instance is null");
                     InstantiateGameManager();
-                    GameManager.Instance.SetGameMode(_gameMode);
                     return;
                 }
-                
+
+                if (_gameLoadedFromMenu) {
+                    // set game mode from scene handler
+                    GameManager.Instance.SetGameMode(_gameMode);
+                    _gameLoadedFromMenu = false;
+                }
+
             }
         }
     }
-
+    
     private void InstantiateGameManager() {
         Logger.Log("Initializing a game manager for the game");
         // set game mode  
