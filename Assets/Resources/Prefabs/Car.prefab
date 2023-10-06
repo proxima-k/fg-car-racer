@@ -77,10 +77,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 0}
-  _maxSpeed: 50
-  _accelerateStrength: 5
+  _defaultMaxSpeed: 40
+  _accelerateStrength: 4
   _steerStrength: 3.25
   _driftStrength: 0.918
+  _fuelBurnSpeed: 10
+  _maxFuel: 100
+  _bonusSpeed: 10
+  _bonusAcceleration: 3
 --- !u!114 &7205623275483519417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,10 +256,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 0}
-  _maxSpeed: 50
+  _defaultMaxSpeed: 50
   _accelerateStrength: 5
   _steerStrength: 3
   _driftStrength: 0.918
+  _fuelBurnSpeed: 10
+  _maxFuel: 100
+  _bonusSpeed: 10
+  _bonusAcceleration: 3
 --- !u!1 &3105261304733798428
 GameObject:
   m_ObjectHideFlags: 0

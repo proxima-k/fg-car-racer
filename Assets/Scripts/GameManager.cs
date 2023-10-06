@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -7,8 +8,7 @@ public class GameManager : MonoBehaviour {
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
-
-        
+    
     private bool isGamePaused;
 
     public GameMode GameMode => _gameMode;
@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour {
         End
     }
     private GameState _gameState = GameState.Initialize;
+    
+    // store car controller references
+    private List<CarController> _participants = new List<CarController>();
     
     private void Awake() {
         if (Instance != null) {
@@ -35,8 +38,8 @@ public class GameManager : MonoBehaviour {
         switch (_gameState) {
             // Initialize everything needed for the game
             case GameState.Initialize:
-                ScriptsInitialization();
                 PlayerInitialization();
+                ScriptsInitialization();
                 
                 _gameState = GameState.Countdown;
                 break;
@@ -64,11 +67,19 @@ public class GameManager : MonoBehaviour {
     private void ScriptsInitialization() {
         GameInput gameInput = Resources.Load<GameInput>("Prefabs/GameInput");
         Instantiate(gameInput);
+
+        PauseUI pauseUI = Resources.Load<PauseUI>("Prefabs/PauseCanvas");
+        Instantiate(pauseUI);
+        
+        PlayerUI playerUI = Resources.Load<PlayerUI>("Prefabs/PlayerCanvas");
+        playerUI = Instantiate(playerUI);
+        playerUI.Initialize(_participants);
     }
 
     private void PlayerInitialization() {
         PlayerInput playerInputPrefab = Resources.Load<PlayerInput>("Prefabs/Car");
         PlayerInput playerInput;
+        
         
         Vector3[] startingPositions = MapSettings.Instance.GetStartingPositions();
         Quaternion[] startingRotations = MapSettings.Instance.GetStartingRotations();
@@ -78,22 +89,30 @@ public class GameManager : MonoBehaviour {
                 // create a global instance that marks the starting position of the map
                 playerInput = Instantiate(playerInputPrefab, startingPositions[0], startingRotations[0]);
                 playerInput.SetControlScheme("Player1");
+
+                _participants.Add(playerInput.GetComponent<CarController>());
                 break;
                     
             case GameMode.TwoPlayer:
                 // Player 1 instantiation
                 playerInput = Instantiate(playerInputPrefab, startingPositions[0], startingRotations[0]);
                 playerInput.SetControlScheme("Player1");
+                _participants.Add(playerInput.GetComponent<CarController>());
                         
                 // Player 2 instantiation
                 playerInput = Instantiate(playerInputPrefab, startingPositions[1], startingRotations[1]);
                 playerInput.SetControlScheme("Player2");
+                _participants.Add(playerInput.GetComponent<CarController>());
                 break;
                     
             default:
-                Logger.LogWarning("The game mode is not within the defined (Player Initialization)");
+                Logger.LogError("The game mode is not within the defined modes (Player Initialization)");
                 break;
         }
+    }
+
+    public List<CarController> GetParticipants() {
+        return _participants;
     }
     
     public void SetGameMode(GameMode gameMode) {

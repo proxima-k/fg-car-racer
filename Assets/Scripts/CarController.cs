@@ -5,21 +5,22 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour {
 
+    public event EventHandler OnUsingFuel;
     public event EventHandler<OnFuelChangedEventArgs> OnFuelChanged;
     public class OnFuelChangedEventArgs : EventArgs {
-        public float fuel;
+        public float fuelNormalized;
     }
     
     private Rigidbody2D _carRigidBody2D;
     [SerializeField] private PlayerInput _playerInput;
 
     // Car Control Settings
-    [SerializeField] private float _defaultMaxSpeed = 50f;
-    [SerializeField] private float _accelerateStrength = 5f;
+    [SerializeField] private float _maxSpeed = 40f;
+    [SerializeField] private float _accelerateStrength = 4f;
     [SerializeField] private float _steerStrength = 3f;
     [SerializeField] [Range(0.1f, 1f)] private float _driftStrength = 0.92f;
 
-    // Nitro Settings
+    // Boost Settings
     [SerializeField] private float _fuelBurnSpeed = 10f;
     [SerializeField] private float _maxFuel = 100;
     [SerializeField] private float _bonusSpeed = 10f;
@@ -28,20 +29,23 @@ public class CarController : MonoBehaviour {
 
     private float _accelerateInput;
     private float _steerInput;
-    private bool _fuelPress;
-    
+    private int _boostInput;
     
     private void Start() {
         _carRigidBody2D = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
+        
+        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs{ fuelNormalized = _currentFuel/_maxFuel});
     }
 
     private void Update() {
         _accelerateInput = _playerInput.GetAccelerateInput();
         _steerInput = _playerInput.GetSteerInput();
+        _boostInput = _playerInput.GetNitroInput();
     }
 
     void FixedUpdate() {
+        BurnFuel();
         Accelerate();
         Drift();
         
@@ -49,21 +53,44 @@ public class CarController : MonoBehaviour {
         Drag();
     }
 
+    private void BurnFuel() {
+        if (_boostInput == 0 || !HasFuel())
+            return;
+        
+        _currentFuel -= _boostInput * _fuelBurnSpeed * Time.deltaTime;
+        
+        if (_currentFuel <= 0) {
+            _currentFuel = 0;
+        }
+        OnUsingFuel?.Invoke(this, EventArgs.Empty);
+        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs{fuelNormalized = _currentFuel / _maxFuel});
+    }
+    
     private void AddFuel(float value) {
         _currentFuel += value;
         if (_currentFuel > _maxFuel) {
             _currentFuel = _maxFuel;
         }
-        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuel = _currentFuel});
+        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuelNormalized = _currentFuel / _maxFuel});
+    }
+
+    private bool HasFuel() {
+        return _currentFuel > 0;
     }
     
     private void Accelerate() {
-        // float maxSpeed = _defaultMaxSpeed + (_bonusSpeed * )
+        float totalMaxSpeed = _maxSpeed;
+        float totalAccelerateStrength = (_accelerateStrength * _accelerateInput);
+
+        if (HasFuel()) {
+            totalMaxSpeed += (_bonusSpeed * _boostInput);
+            totalAccelerateStrength += (_bonusAcceleration * _boostInput);
+        }
         
-        if (_carRigidBody2D.velocity.magnitude > _defaultMaxSpeed)
+        if (_carRigidBody2D.velocity.magnitude > totalMaxSpeed)
             return;
         
-        Vector2 accelerateForce = transform.up * (_accelerateStrength * _accelerateInput);
+        Vector2 accelerateForce = transform.up * totalAccelerateStrength;
         
         _carRigidBody2D.AddForce(accelerateForce, ForceMode2D.Force);
     }

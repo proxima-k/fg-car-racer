@@ -44,6 +44,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Boost"",
+                    ""type"": ""Value"",
+                    ""id"": ""70e73768-de3a-43fd-9743-32b477fe0e8c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -178,6 +187,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Steer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c35143f-a841-47fe-9447-1648f3586bd2"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player1"",
+                    ""action"": ""Boost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""586de71b-48e6-4c01-8759-ec76819c8cf6"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Player2"",
+                    ""action"": ""Boost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -239,6 +270,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Accelerate = m_Player.FindAction("Accelerate", throwIfNotFound: true);
         m_Player_Steer = m_Player.FindAction("Steer", throwIfNotFound: true);
+        m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
         m_General_PauseGame = m_General.FindAction("PauseGame", throwIfNotFound: true);
@@ -305,12 +337,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Accelerate;
     private readonly InputAction m_Player_Steer;
+    private readonly InputAction m_Player_Boost;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Accelerate => m_Wrapper.m_Player_Accelerate;
         public InputAction @Steer => m_Wrapper.m_Player_Steer;
+        public InputAction @Boost => m_Wrapper.m_Player_Boost;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -326,6 +360,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Steer.started += instance.OnSteer;
             @Steer.performed += instance.OnSteer;
             @Steer.canceled += instance.OnSteer;
+            @Boost.started += instance.OnBoost;
+            @Boost.performed += instance.OnBoost;
+            @Boost.canceled += instance.OnBoost;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -336,6 +373,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Steer.started -= instance.OnSteer;
             @Steer.performed -= instance.OnSteer;
             @Steer.canceled -= instance.OnSteer;
+            @Boost.started -= instance.OnBoost;
+            @Boost.performed -= instance.OnBoost;
+            @Boost.canceled -= instance.OnBoost;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -421,6 +461,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnAccelerate(InputAction.CallbackContext context);
         void OnSteer(InputAction.CallbackContext context);
+        void OnBoost(InputAction.CallbackContext context);
     }
     public interface IGeneralActions
     {

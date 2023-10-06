@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,9 +22,8 @@ public class PlayerInput : MonoBehaviour {
         return _playerInputActions.Player.Steer.ReadValue<float>();
     }
 
-    public bool GetNitroInput() {
-        // return _playerInputActions.Player.
-        return false;
+    public int GetNitroInput() {
+        return _playerInputActions.Player.Boost.IsInProgress() ? 1 : 0;
     }
     
     private void OnEnable() {
