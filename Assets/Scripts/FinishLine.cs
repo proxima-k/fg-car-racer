@@ -1,24 +1,33 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FinishLine : MonoBehaviour {
-    
-    // direction
-    // if clockwise and horizontal
-    
-    void Start() {
-        
+
+    private Transform _bodyTransform;
+
+    private void Awake() {
+        _bodyTransform = GetComponentInChildren<BoxCollider2D>().transform;
     }
 
-    void Update() {
-        
+    private void Start() {
+        GameManager.Instance.GetParticipants();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        // get center to collision point vector
-        // dot product of the finish line intended direction
-        // if dot product is negative then don't register it
+        if (other.TryGetComponent(out CarController carController)) {
+            
+            Vector2 contactToCenterDirection = (_bodyTransform.position - other.transform.position).normalized;
+
+            float dotProduct = Vector2.Dot(transform.up, contactToCenterDirection);
+
+            if (dotProduct < 0) {
+                Debug.Log("A participant is cheating");
+            }
+            else {
+                // if player wasn't cheating
+                // add a lap to the player
+            }
+        }
     }
 }

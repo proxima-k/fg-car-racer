@@ -113,6 +113,10 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
+
+    public List<CarController> GetParticipants() {
+        return _participants;
+    }
     
     public void SetGameMode(GameMode gameMode) {
         _gameMode = gameMode;

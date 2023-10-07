@@ -81,8 +81,8 @@ public class MapSettings : MonoBehaviour {
             carStartingPositions[1] = _startCellCenterWorldPos + Vector3.right * (raceTrackSize.x / 4);
         }
         
-        Debug.Log(carStartingPositions[0]);
-        Debug.Log(carStartingPositions[1]);
+        // Debug.Log(carStartingPositions[0]);
+        // Debug.Log(carStartingPositions[1]);
         return carStartingPositions;
     }
 
