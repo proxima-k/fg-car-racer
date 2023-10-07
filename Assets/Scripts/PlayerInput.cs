@@ -8,6 +8,11 @@ public class PlayerInput : MonoBehaviour {
     private void Awake() {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
+        GameManager.Instance.OnGameStart += GameManager_OnGameStart;
+    }
+
+    private void GameManager_OnGameStart(object sender, EventArgs e) {
+        EnableInput();
     }
 
     public void SetControlScheme(string schemeName) {
@@ -24,6 +29,14 @@ public class PlayerInput : MonoBehaviour {
 
     public int GetNitroInput() {
         return _playerInputActions.Player.Boost.IsInProgress() ? 1 : 0;
+    }
+
+    public void EnableInput() {
+        _playerInputActions.Player.Enable();
+    }
+    
+    public void DisableInput() {
+        _playerInputActions.Player.Disable();
     }
     
     private void OnEnable() {

@@ -1,13 +1,17 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour {
-    [SerializeField] private GameObject Player1UI;
-    [SerializeField] private GameObject Player2UI;
+    [SerializeField] private GameObject _player1UI;
+    [SerializeField] private GameObject _player2UI;
     
-    [SerializeField] private Image Player1FuelBar;
-    [SerializeField] private Image Player2FuelBar;
+    [SerializeField] private Image _player1FuelBar;
+    [SerializeField] private Image _player2FuelBar;
+
+    [SerializeField] private TextMeshProUGUI _timerText;
 
     
     public void Initialize(List<CarController> participants) {
@@ -18,16 +22,16 @@ public class PlayerUI : MonoBehaviour {
                 return;
             case 1:
                 participants[0].OnFuelChanged += Player1_OnFuelChanged;
-                Player1UI.SetActive(true);
-                Player2UI.SetActive(false);
+                _player1UI.SetActive(true);
+                _player2UI.SetActive(false);
                 
                 break;
             case 2:
                 participants[0].OnFuelChanged += Player1_OnFuelChanged;
                 participants[1].OnFuelChanged += Player2_OnFuelChanged;
                 
-                Player1UI.SetActive(true);
-                Player2UI.SetActive(true);
+                _player1UI.SetActive(true);
+                _player2UI.SetActive(true);
                 
                 break;
             default:
@@ -37,10 +41,16 @@ public class PlayerUI : MonoBehaviour {
 
     }
 
+    
+    private void Update() {
+        float timer = GameManager.Instance.GameTimer;
+        _timerText.text = timer.ToString();
+    }
+
     private void Player1_OnFuelChanged(object sender, CarController.OnFuelChangedEventArgs e) {
-        Player1FuelBar.fillAmount = e.fuelNormalized;
+        _player1FuelBar.fillAmount = e.fuelNormalized;
     }
     private void Player2_OnFuelChanged(object sender, CarController.OnFuelChangedEventArgs e) {
-        Player2FuelBar.fillAmount = e.fuelNormalized;
+        _player2FuelBar.fillAmount = e.fuelNormalized;
     }
 }

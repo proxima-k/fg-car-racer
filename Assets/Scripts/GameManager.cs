@@ -8,22 +8,26 @@ public class GameManager : MonoBehaviour {
 
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
-    
     private bool isGamePaused;
+
+    public event EventHandler OnGameStart;
+    
 
     public GameMode GameMode => _gameMode;
     [SerializeField] private GameMode _gameMode = GameMode.OnePlayer;
     
     public enum GameState {
-        Initialize,
         Countdown,
         Running,
         End
     }
-    private GameState _gameState = GameState.Initialize;
+    private GameState _gameState = GameState.Countdown;
     
-    // store car controller references
     private List<CarController> _participants = new List<CarController>();
+    
+    private float _countdownTimer;
+    public float GameTimer => _gameTimer;
+    private float _gameTimer = 0f;
     
     private void Awake() {
         if (Instance != null) {
@@ -34,17 +38,14 @@ public class GameManager : MonoBehaviour {
         // DontDestroyOnLoad(this);
     }
 
+    private void Start() {
+        // Initialize everything needed for the game
+        PlayerInitialization();
+        ScriptsInitialization();
+    }
+
     private void Update() {
         switch (_gameState) {
-            // Initialize everything needed for the game
-            case GameState.Initialize:
-                PlayerInitialization();
-                ScriptsInitialization();
-                
-                _gameState = GameState.Countdown;
-                break;
-            
-            // Countdown till the game starts
             case GameState.Countdown:
                 // do countdown
                 break;
@@ -52,6 +53,8 @@ public class GameManager : MonoBehaviour {
             // Game running
             case GameState.Running:
                 // timer
+                _gameTimer += Time.deltaTime;
+                
                 break;
             
             // When someone wins, display UI for stats
@@ -98,7 +101,7 @@ public class GameManager : MonoBehaviour {
                 playerInput = Instantiate(playerInputPrefab, startingPositions[0], startingRotations[0]);
                 playerInput.SetControlScheme("Player1");
                 _participants.Add(playerInput.GetComponent<CarController>());
-                        
+
                 // Player 2 instantiation
                 playerInput = Instantiate(playerInputPrefab, startingPositions[1], startingRotations[1]);
                 playerInput.SetControlScheme("Player2");
@@ -109,10 +112,6 @@ public class GameManager : MonoBehaviour {
                 Logger.LogError("The game mode is not within the defined modes (Player Initialization)");
                 break;
         }
-    }
-
-    public List<CarController> GetParticipants() {
-        return _participants;
     }
     
     public void SetGameMode(GameMode gameMode) {

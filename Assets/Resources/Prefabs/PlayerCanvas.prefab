@@ -301,10 +301,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1102560a57cc6f84cba460aaa81bec86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player1UI: {fileID: 2217211505884359796}
-  Player2UI: {fileID: 1373639523409444586}
-  Player1FuelBar: {fileID: 5981240736938251191}
-  Player2FuelBar: {fileID: 618795768097267608}
+  _player1UI: {fileID: 2217211505884359796}
+  _player2UI: {fileID: 1373639523409444586}
+  _player1FuelBar: {fileID: 5981240736938251191}
+  _player2FuelBar: {fileID: 618795768097267608}
+  _timerText: {fileID: 740912723395617989}
 --- !u!1 &3235876530965154929
 GameObject:
   m_ObjectHideFlags: 0
