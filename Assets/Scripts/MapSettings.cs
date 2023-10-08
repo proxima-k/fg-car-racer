@@ -6,7 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class MapSettings : MonoBehaviour {
     public static MapSettings Instance { get; private set; }
-
+    public int LapsToWin => _lapsToWin;
+    
+    
     public enum FacingDirection {
         Up,
         Left,
@@ -15,6 +17,7 @@ public class MapSettings : MonoBehaviour {
     }
 
     [SerializeField] private FacingDirection _facingDirection = FacingDirection.Up;
+    [SerializeField] private int _lapsToWin = 2;
     
     Tilemap _raceTrackTileMap;
     private Vector3 _startCellCenterWorldPos;

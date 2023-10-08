@@ -14,21 +14,21 @@ public class PlayerUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _timerText;
 
     
-    public void Initialize(List<CarController> participants) {
+    public void Initialize(List<CarController> carControllers) {
 
-        switch (participants.Count) {
+        switch (carControllers.Count) {
             case 0:
                 Logger.LogError("There are no participants.");
                 return;
             case 1:
-                participants[0].OnFuelChanged += Player1_OnFuelChanged;
+                carControllers[0].OnFuelChanged += Player1_OnFuelChanged;
                 _player1UI.SetActive(true);
                 _player2UI.SetActive(false);
                 
                 break;
             case 2:
-                participants[0].OnFuelChanged += Player1_OnFuelChanged;
-                participants[1].OnFuelChanged += Player2_OnFuelChanged;
+                carControllers[0].OnFuelChanged += Player1_OnFuelChanged;
+                carControllers[1].OnFuelChanged += Player2_OnFuelChanged;
                 
                 _player1UI.SetActive(true);
                 _player2UI.SetActive(true);
@@ -38,7 +38,6 @@ public class PlayerUI : MonoBehaviour {
                 Logger.LogWarning("There are extra participants in the game.");
                 break;
         }
-
     }
 
     

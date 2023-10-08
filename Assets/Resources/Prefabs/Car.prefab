@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 193934874160144472}
   - component: {fileID: 7205623275483519417}
   - component: {fileID: 3295244170650392594}
+  - component: {fileID: 2273956588773139917}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 0}
-  _defaultMaxSpeed: 40
+  _maxSpeed: 40
   _accelerateStrength: 4
   _steerStrength: 3.25
   _driftStrength: 0.918
@@ -112,6 +113,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dcdef9dbae4c44439c94aad626589d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2273956588773139917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144592914088114552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b57cd72cff9f85419fd48fa718812a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Player
 --- !u!1 &2308884081515884287
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +137,6 @@ GameObject:
   - component: {fileID: 2880280989770467113}
   - component: {fileID: 3928905309537075113}
   - component: {fileID: 8215048638138555216}
-  - component: {fileID: 1511077656318160670}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -243,27 +256,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.375, y: 0.6875}
   m_EdgeRadius: 0
---- !u!114 &1511077656318160670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2308884081515884287}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca19cfbfd11e974458a7ac0a95504853, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerInput: {fileID: 0}
-  _defaultMaxSpeed: 50
-  _accelerateStrength: 5
-  _steerStrength: 3
-  _driftStrength: 0.918
-  _fuelBurnSpeed: 10
-  _maxFuel: 100
-  _bonusSpeed: 10
-  _bonusAcceleration: 3
 --- !u!1 &3105261304733798428
 GameObject:
   m_ObjectHideFlags: 0

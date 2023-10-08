@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FinishLine : MonoBehaviour {
@@ -10,23 +8,37 @@ public class FinishLine : MonoBehaviour {
         _bodyTransform = GetComponentInChildren<BoxCollider2D>().transform;
     }
 
-    private void Start() {
-        GameManager.Instance.GetParticipants();
-    }
-
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.TryGetComponent(out CarController carController)) {
+        
+        
+        if (other.transform.root.TryGetComponent(out Participant participant)) {
             
             Vector2 contactToCenterDirection = (_bodyTransform.position - other.transform.position).normalized;
 
             float dotProduct = Vector2.Dot(transform.up, contactToCenterDirection);
 
+            // Logger.Log("Test");
+            
             if (dotProduct < 0) {
-                Debug.Log("A participant is cheating");
+                Logger.Log("A participant is cheating");
+                participant.ToggleIsCheating();
             }
             else {
                 // if player wasn't cheating
                 // add a lap to the player
+                if (participant.IsCheating) {
+                    participant.ToggleIsCheating();
+                    return;
+                }
+                
+                participant.AddLapCompleted();
+                
+                // if laps completed is equal to the required
+                // trigger end game
+                // GameManager.Instance.TriggerEndGame
+                if (participant.LapsCompleted >= MapSettings.Instance.LapsToWin) {
+                    GameManager.Instance.TriggerEndGame(participant);
+                }
             }
         }
     }
