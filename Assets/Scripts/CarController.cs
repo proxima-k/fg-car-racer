@@ -66,7 +66,7 @@ public class CarController : MonoBehaviour {
         OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs{fuelNormalized = _currentFuel / _maxFuel});
     }
     
-    private void AddFuel(float value) {
+    public void AddFuel(float value) {
         _currentFuel += value;
         if (_currentFuel > _maxFuel) {
             _currentFuel = _maxFuel;
