@@ -12,10 +12,11 @@ public class PlayerUI : MonoBehaviour {
     [SerializeField] private Image _player2FuelBar;
 
     [SerializeField] private TextMeshProUGUI _timerText;
-
+    
     
     public void Initialize(List<CarController> carControllers) {
 
+        GameManager.Instance.OnGameTimerChanged += GameManager_OnGameTimerChanged;
         switch (carControllers.Count) {
             case 0:
                 Logger.LogError("There are no participants.");
@@ -40,12 +41,16 @@ public class PlayerUI : MonoBehaviour {
         }
     }
 
-    
-    private void Update() {
-        float timer = GameManager.Instance.GameTimer;
-        _timerText.text = timer.ToString();
+    private void GameManager_OnGameTimerChanged(object sender, GameManager.OnGameTimerChangedEventArgs e) {
+
+        // float time = e.time * 100f;
+        int minute = (int)(e.time / 60);
+        int seconds = (int)(e.time % 60);
+        int milliseconds = (int)(e.time * 100 % 100);
+        _timerText.text = $"{minute:00}:{seconds:00}:{milliseconds:00}";
     }
 
+    
     private void Player1_OnFuelChanged(object sender, CarController.OnFuelChangedEventArgs e) {
         _player1FuelBar.fillAmount = e.fuelNormalized;
     }

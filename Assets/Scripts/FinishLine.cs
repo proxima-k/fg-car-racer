@@ -9,8 +9,6 @@ public class FinishLine : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        
-        
         if (other.transform.root.TryGetComponent(out Participant participant)) {
             
             Vector2 contactToCenterDirection = (_bodyTransform.position - other.transform.position).normalized;

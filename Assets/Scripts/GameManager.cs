@@ -6,18 +6,27 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance { get; private set; }
 
+    public event EventHandler OnGameStart;
+    
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
     private bool isGamePaused;
 
-    public event EventHandler OnGameStart;
     public event EventHandler<OnGameEndEventArgs> OnGameEnd;
     public class OnGameEndEventArgs : EventArgs {
         public string winnerName;
         // time
     }
+    public event EventHandler<OnCountdownTimerChangedEventArgs> OnCountdownTimerChanged;
+    public class OnCountdownTimerChangedEventArgs : EventArgs {
+        public float time;
+    }
     
-
+    public event EventHandler<OnGameTimerChangedEventArgs> OnGameTimerChanged;
+    public class OnGameTimerChangedEventArgs : EventArgs {
+        public float time;
+    }
+    
     public GameMode GameMode => _gameMode;
     [SerializeField] private GameMode _gameMode = GameMode.OnePlayer;
     
@@ -30,6 +39,7 @@ public class GameManager : MonoBehaviour {
     
     private List<CarController> _carControllers = new List<CarController>();
     
+    [SerializeField] private float _countdownDuration = 3f;
     private float _countdownTimer;
     public float GameTimer => _gameTimer;
     private float _gameTimer = 0f;
@@ -40,26 +50,36 @@ public class GameManager : MonoBehaviour {
             return;
         }
         Instance = this;
-        // DontDestroyOnLoad(this);
     }
 
     private void Start() {
         // Initialize everything needed for the game
         PlayerInitialization();
         ScriptsInitialization();
+
+        _countdownTimer = _countdownDuration;
     }
 
     private void Update() {
         switch (_gameState) {
             case GameState.Countdown:
-                // do countdown
+                if (_countdownTimer > 0) {
+                    _countdownTimer -= Time.deltaTime;
+                    OnCountdownTimerChanged?.Invoke(this, new OnCountdownTimerChangedEventArgs { time = _countdownTimer });
+                    Debug.Log(_countdownTimer);
+                }
+                else {
+                    OnGameStart?.Invoke(this, EventArgs.Empty);
+                    _gameState = GameState.Running;
+                }
+                
                 break;
             
             // Game running
             case GameState.Running:
                 // timer
                 _gameTimer += Time.deltaTime;
-                
+                OnGameTimerChanged?.Invoke(this, new OnGameTimerChangedEventArgs { time = _gameTimer});
                 break;
             
             // When someone wins, display UI for stats
@@ -71,7 +91,8 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
-
+    
+    
     private void ScriptsInitialization() {
         GameInput gameInput = Resources.Load<GameInput>("Prefabs/GameInput");
         Instantiate(gameInput);

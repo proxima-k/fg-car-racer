@@ -62,6 +62,8 @@ public class CarController : MonoBehaviour {
         if (_currentFuel <= 0) {
             _currentFuel = 0;
         }
+ 
+        // play turbo animation
         OnUsingFuel?.Invoke(this, EventArgs.Empty);
         OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs{fuelNormalized = _currentFuel / _maxFuel});
     }
@@ -98,10 +100,10 @@ public class CarController : MonoBehaviour {
     private void Steer() {
         // to prevent rotating the car when the car isn't moving
         float steerMagnitude = 7f;
-        float velocityToRotationRatio = _carRigidBody2D.velocity.magnitude / steerMagnitude;
+        float velocityToSteerRatio = _carRigidBody2D.velocity.magnitude / steerMagnitude;
         
         float currentAngle = transform.eulerAngles.z;
-        float rotateAmount = (_steerStrength * _steerInput * velocityToRotationRatio);
+        float rotateAmount = (_steerStrength * _steerInput * velocityToSteerRatio);
 
         // to make reversing the car more intuitive (press steer left key will make the car steer to the left)
         if (_accelerateInput < 0)
