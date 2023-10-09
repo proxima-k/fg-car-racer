@@ -10,6 +10,14 @@ public class FinishLine : MonoBehaviour {
         _bodyTransform = GetComponentInChildren<BoxCollider2D>().transform;
     }
 
+    private void Start() {
+        GameManager.Instance.OnGameRestart += GameManager_OnGameRestart;
+    }
+
+    private void GameManager_OnGameRestart(object sender, EventArgs e) {
+        _hasWinner = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.transform.root.TryGetComponent(out Participant participant)) {
             
@@ -33,8 +41,9 @@ public class FinishLine : MonoBehaviour {
                 // if laps completed is equal to the required
                 // trigger end game
                 // GameManager.Instance.TriggerEndGame
-                if (participant.LapsCompleted >= MapSettings.Instance.LapsToWin) {
+                if (!_hasWinner && participant.LapsCompleted >= MapSettings.Instance.LapsToWin) {
                     GameManager.Instance.TriggerEndGame(participant);
+                    _hasWinner = true;
                 }
             }
         }

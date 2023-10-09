@@ -10,10 +10,15 @@ public class CountdownUI : MonoBehaviour {
     private void Start() {
         GameManager.Instance.OnCountdownTimerChanged += GameManager_OnCountdownTimerChanged;
         GameManager.Instance.OnGameStart += GameManager_OnGameStart;
+        GameManager.Instance.OnGameRestart += GameManager_OnGameRestart;
+    }
+
+    private void GameManager_OnGameRestart(object sender, EventArgs e) {
+        Show();
     }
 
     private void GameManager_OnGameStart(object sender, EventArgs e) {
-        // add go coroutine?
+        // add go coroutine "GO!"
         Hide();
     }
 

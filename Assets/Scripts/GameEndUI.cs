@@ -17,12 +17,18 @@ public class GameEndUI : MonoBehaviour {
     private void Start() {
         GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
         _mainMenuButton.onClick.AddListener(SceneHandler.Instance.LoadMainMenuScene);
+        _againButton.onClick.AddListener(RestartGame);
     }
 
     private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
         _winnerText.text = $"Winner: {e.winnerName}!";
         _timerText.text = Utils.FormatTime(e.timeTaken);
         Show();
+    }
+
+    private void RestartGame() {
+        GameManager.Instance.Restart();
+        Hide();
     }
     
     private void Show() {

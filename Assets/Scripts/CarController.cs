@@ -26,15 +26,20 @@ public class CarController : MonoBehaviour {
     [SerializeField] private float _maxFuel = 100;
     [SerializeField] private float _bonusSpeed = 10f;
     [SerializeField] private float _bonusAcceleration = 3f;
-    private float _currentFuel = 50f;
+    private float _currentFuel;
+    private float _startingFuel = 50f;
 
     private float _accelerateInput;
     private float _steerInput;
     private int _boostInput;
-    
-    private void Start() {
+
+    private void Awake() {
+        _currentFuel = _startingFuel;
         _carRigidBody2D = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
+    }
+
+    private void Start() {
         
         OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs{ fuelNormalized = _currentFuel/_maxFuel});
     }
@@ -78,6 +83,12 @@ public class CarController : MonoBehaviour {
         OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuelNormalized = _currentFuel / _maxFuel});
     }
 
+    public void Reset() {
+        _currentFuel = _startingFuel;
+        _carRigidBody2D.velocity = Vector2.zero;
+        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuelNormalized = _currentFuel / _maxFuel});
+    }
+    
     private bool HasFuel() {
         return _currentFuel > 0;
     }

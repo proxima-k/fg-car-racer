@@ -6,8 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class MapSettings : MonoBehaviour {
     public static MapSettings Instance { get; private set; }
-    public int LapsToWin => _lapsToWin;
-    
     
     public enum FacingDirection {
         Up,
@@ -17,6 +15,7 @@ public class MapSettings : MonoBehaviour {
     }
 
     [SerializeField] private FacingDirection _facingDirection = FacingDirection.Up;
+    public int LapsToWin => _lapsToWin;
     [SerializeField] private int _lapsToWin = 2;
     
     Tilemap _raceTrackTileMap;
@@ -84,8 +83,6 @@ public class MapSettings : MonoBehaviour {
             carStartingPositions[1] = _startCellCenterWorldPos + Vector3.right * (raceTrackSize.x / 4);
         }
         
-        // Debug.Log(carStartingPositions[0]);
-        // Debug.Log(carStartingPositions[1]);
         return carStartingPositions;
     }
 

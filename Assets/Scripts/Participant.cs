@@ -14,6 +14,28 @@ public class Participant : MonoBehaviour {
     private bool _isCheating = false;
     private int _lapsCompleted = -1; // since they have to pass the finish line initially 
 
+    private Vector3 _startingPosition;
+    private Quaternion _startingQuaternion;
+    
+    public void Reset() {
+        // resets fuel
+        CarController carController = GetComponent<CarController>();
+        carController.Reset();
+
+        // resets position
+        transform.position = _startingPosition;
+        transform.rotation = _startingQuaternion;
+
+        _lapsCompleted = -1;
+    }
+
+    public void Initialize(Vector3 startingPosition, Quaternion startingQuaternion) {
+        _startingPosition = startingPosition;
+        _startingQuaternion = startingQuaternion;
+        
+        Reset();
+    }
+    
     public void SetCheating(bool isCheating) {
         _isCheating = isCheating;
     }

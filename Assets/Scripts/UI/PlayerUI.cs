@@ -14,22 +14,22 @@ public class PlayerUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _timerText;
     
     
-    public void Initialize(List<CarController> carControllers) {
+    public void Initialize(List<Participant> participants) {
 
         GameManager.Instance.OnGameTimerChanged += GameManager_OnGameTimerChanged;
-        switch (carControllers.Count) {
+        switch (participants.Count) {
             case 0:
                 Logger.LogError("There are no participants.");
                 return;
             case 1:
-                carControllers[0].OnFuelChanged += Player1_OnFuelChanged;
+                participants[0].GetComponent<CarController>().OnFuelChanged += Player1_OnFuelChanged;
                 _player1UI.SetActive(true);
                 _player2UI.SetActive(false);
                 
                 break;
             case 2:
-                carControllers[0].OnFuelChanged += Player1_OnFuelChanged;
-                carControllers[1].OnFuelChanged += Player2_OnFuelChanged;
+                participants[0].GetComponent<CarController>().OnFuelChanged += Player1_OnFuelChanged;
+                participants[1].GetComponent<CarController>().OnFuelChanged += Player2_OnFuelChanged;
                 
                 _player1UI.SetActive(true);
                 _player2UI.SetActive(true);

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
     public event EventHandler OnGameStart;
+    public event EventHandler OnGameRestart;
     
     public event EventHandler OnGamePaused;
     public event EventHandler OnGameUnpaused;
@@ -37,7 +38,11 @@ public class GameManager : MonoBehaviour {
     }
     private GameState _gameState = GameState.Countdown;
     
-    private List<CarController> _carControllers = new List<CarController>();
+    // Car related variables
+    private List<Participant> _participants = new List<Participant>();
+    private Vector3[] startingPositions;
+    private Quaternion[] startingRotations;
+    
     
     [SerializeField] private float _countdownDuration = 3f;
     private float _countdownTimer;
@@ -101,7 +106,7 @@ public class GameManager : MonoBehaviour {
         
         PlayerUI playerUI = Resources.Load<PlayerUI>("Prefabs/PlayerCanvas");
         playerUI = Instantiate(playerUI);
-        playerUI.Initialize(_carControllers);
+        playerUI.Initialize(_participants);
 
         GameEndUI gameEndUI = Resources.Load<GameEndUI>("Prefabs/GameEndCanvas");
         Instantiate(gameEndUI);
@@ -113,34 +118,48 @@ public class GameManager : MonoBehaviour {
     private void PlayerInitialization() {
         PlayerInput playerInputPrefab = Resources.Load<PlayerInput>("Prefabs/Car");
         PlayerInput playerInput;
+        Participant participant;
         
+        startingPositions = MapSettings.Instance.GetStartingPositions();
+        startingRotations = MapSettings.Instance.GetStartingRotations();
         
-        Vector3[] startingPositions = MapSettings.Instance.GetStartingPositions();
-        Quaternion[] startingRotations = MapSettings.Instance.GetStartingRotations();
         switch (_gameMode) {
             case GameMode.OnePlayer:
                 // create single player
                 // create a global instance that marks the starting position of the map
-                playerInput = Instantiate(playerInputPrefab, startingPositions[0], startingRotations[0]);
+                playerInput = Instantiate(playerInputPrefab);
                 playerInput.SetControlScheme("Player1");
 
-                _carControllers.Add(playerInput.GetComponent<CarController>());
+                participant = playerInput.GetComponent<Participant>();
+                participant.Name = "Player 1";
 
-                playerInput.GetComponent<Participant>().Name = "Player 1";
+                participant.Initialize(startingPositions[0], startingRotations[0]);
+                
+                _participants.Add(participant);
                 break;
                     
             case GameMode.TwoPlayer:
                 // Player 1 instantiation
-                playerInput = Instantiate(playerInputPrefab, startingPositions[0], startingRotations[0]);
+                playerInput = Instantiate(playerInputPrefab);
                 playerInput.SetControlScheme("Player1");
-                playerInput.GetComponent<Participant>().Name = "Player 1";
-                _carControllers.Add(playerInput.GetComponent<CarController>());
-
+                
+                participant = playerInput.GetComponent<Participant>();
+                participant.Name = "Player 1";
+                
+                participant.Initialize(startingPositions[0], startingRotations[0]);
+                
+                _participants.Add(participant);
+                
                 // Player 2 instantiation
-                playerInput = Instantiate(playerInputPrefab, startingPositions[1], startingRotations[1]);
+                playerInput = Instantiate(playerInputPrefab);
                 playerInput.SetControlScheme("Player2");
-                playerInput.GetComponent<Participant>().Name = "Player 2";
-                _carControllers.Add(playerInput.GetComponent<CarController>());
+                
+                participant = playerInput.GetComponent<Participant>();
+                participant.Name = "Player 2";
+                
+                participant.Initialize( startingPositions[1], startingRotations[1]);
+                
+                _participants.Add(participant);
                 break;
                     
             default:
@@ -148,9 +167,27 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
+    
+    public void Restart() {
+        _gameState = GameState.Countdown;
+        Time.timeScale = 1;
+        _countdownTimer = _countdownDuration;
+        _gameTimer = 0f;
+        
+        ResetParticipants();
+        
+        OnGameRestart?.Invoke(this, EventArgs.Empty);
+        OnGameTimerChanged?.Invoke(this, new OnGameTimerChangedEventArgs {time = _gameTimer});
+    }
 
-    public List<CarController> GetCarControllers() {
-        return _carControllers;
+    public void ResetParticipants() {
+        foreach (Participant participant in _participants) {
+            participant.Reset();
+        }
+    }
+    
+    public List<Participant> GetParticipants() {
+        return _participants;
     }
     
     public void SetGameMode(GameMode gameMode) {
@@ -161,6 +198,7 @@ public class GameManager : MonoBehaviour {
         _gameState = GameState.End;
         
         // timescale set to 0
+        Time.timeScale = 0;
         
         OnGameEnd?.Invoke(this, new OnGameEndEventArgs {
             winnerName = winner.Name,
