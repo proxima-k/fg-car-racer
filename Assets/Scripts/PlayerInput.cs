@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour {
         
         GameManager.Instance.OnGameStart += GameManager_OnGameStart;
         GameManager.Instance.OnGameRestart += GameManager_OnGameRestart;
+        GameManager.Instance.OnGameEnd += GameManager_OnGameRestart;
     }
 
     private void GameManager_OnGameRestart(object sender, EventArgs e) {
@@ -54,9 +55,4 @@ public class PlayerInput : MonoBehaviour {
 
     private void OnDisable() {
         _playerInputActions.Player.Disable();
-    }
-
-    private void OnDestroy() {
-        _playerInputActions.Player.Disable();
-    }
-}
+    } }

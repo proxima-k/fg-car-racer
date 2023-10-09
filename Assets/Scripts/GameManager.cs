@@ -209,9 +209,6 @@ public class GameManager : MonoBehaviour {
     public void TriggerEndGame(Participant winner) {
         _gameState = GameState.End;
         
-        // timescale set to 0
-        Time.timeScale = 0;
-        
         OnGameEnd?.Invoke(this, new OnGameEndEventArgs {
             winnerName = winner.Name,
             timeTaken = _gameTimer
