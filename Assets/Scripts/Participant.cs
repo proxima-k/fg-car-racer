@@ -42,7 +42,6 @@ public class Participant : MonoBehaviour {
 
     public void AddLapCompleted() {
         _lapsCompleted++;
-        // trigger onLapAdded
         Logger.Log($"Lap Completed: {_lapsCompleted}");
     }
 }

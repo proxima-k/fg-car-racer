@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour {
     public int LapsToWin => _lapsToWin;
     [SerializeField] private int _lapsToWin = 2;
     
-
     // Car related variables ---------------------------
     private List<Participant> _participants = new List<Participant>();
     private Vector3[] startingPositions;
@@ -200,6 +199,7 @@ public class GameManager : MonoBehaviour {
     
     public void SetLapsToWin(int laps) {
         _lapsToWin = laps;
+        Debug.Log(_lapsToWin);
     }
     
     public void SetGameMode(GameMode gameMode) {

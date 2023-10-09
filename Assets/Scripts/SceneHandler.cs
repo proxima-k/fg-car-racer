@@ -53,7 +53,6 @@ public class SceneHandler : MonoBehaviour {
                 if (GameManager.Instance == null) {
                     Debug.Log("Game manager instance is null");
                     InstantiateGameManager();
-                    return;
                 }
 
                 if (_gameLoadedFromMenu) {
