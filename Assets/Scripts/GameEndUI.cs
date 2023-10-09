@@ -20,8 +20,9 @@ public class GameEndUI : MonoBehaviour {
     }
 
     private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {
-        Show();
         _winnerText.text = $"Winner: {e.winnerName}!";
+        _timerText.text = Utils.FormatTime(e.timeTaken);
+        Show();
     }
     
     private void Show() {

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
     public event EventHandler<OnGameEndEventArgs> OnGameEnd;
     public class OnGameEndEventArgs : EventArgs {
         public string winnerName;
-        // time
+        public float timeTaken;
     }
     public event EventHandler<OnCountdownTimerChangedEventArgs> OnCountdownTimerChanged;
     public class OnCountdownTimerChangedEventArgs : EventArgs {
@@ -162,7 +162,10 @@ public class GameManager : MonoBehaviour {
         
         // timescale set to 0
         
-        OnGameEnd?.Invoke(this, new OnGameEndEventArgs {winnerName = winner.Name});        
+        OnGameEnd?.Invoke(this, new OnGameEndEventArgs {
+            winnerName = winner.Name,
+            timeTaken = _gameTimer
+        });        
     }
     
     public void TogglePauseGame() {

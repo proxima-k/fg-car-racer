@@ -42,12 +42,7 @@ public class PlayerUI : MonoBehaviour {
     }
 
     private void GameManager_OnGameTimerChanged(object sender, GameManager.OnGameTimerChangedEventArgs e) {
-
-        // float time = e.time * 100f;
-        int minute = (int)(e.time / 60);
-        int seconds = (int)(e.time % 60);
-        int milliseconds = (int)(e.time * 100 % 100);
-        _timerText.text = $"{minute:00}:{seconds:00}:{milliseconds:00}";
+        _timerText.text = Utils.FormatTime(e.time);
     }
 
     
