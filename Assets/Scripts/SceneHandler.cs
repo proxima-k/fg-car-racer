@@ -6,6 +6,7 @@ public class SceneHandler : MonoBehaviour {
     
     private GameSettings _gameSettings;
     private GameMode _gameMode;
+    private int _lapsToWin;
     private bool _gameLoadedFromMenu;
     
     private void Awake() {
@@ -30,8 +31,9 @@ public class SceneHandler : MonoBehaviour {
         SceneManager.LoadScene(_gameSettings.mainMenuScene.name);
     }
 
-    public void LoadGameScene(GameMode gameMode, string sceneName) {
+    public void LoadGameScene(string sceneName, GameMode gameMode, int lapsToWin) {
         _gameMode = gameMode;
+        _lapsToWin = lapsToWin;
         _gameLoadedFromMenu = true;
         SceneManager.LoadScene(sceneName);
     }
@@ -57,6 +59,9 @@ public class SceneHandler : MonoBehaviour {
                 if (_gameLoadedFromMenu) {
                     // set game mode from scene handler
                     GameManager.Instance.SetGameMode(_gameMode);
+                    // set number of laps
+                    GameManager.Instance.SetLapsToWin(_lapsToWin);
+                    
                     _gameLoadedFromMenu = false;
                 }
 

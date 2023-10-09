@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    // Delegates for UI and certain events
     public static GameManager Instance { get; private set; }
 
     public event EventHandler OnGameStart;
@@ -28,26 +29,32 @@ public class GameManager : MonoBehaviour {
         public float time;
     }
     
+    // Game settings -----------------------------------
     public GameMode GameMode => _gameMode;
     [SerializeField] private GameMode _gameMode = GameMode.OnePlayer;
     
+    public int LapsToWin => _lapsToWin;
+    [SerializeField] private int _lapsToWin = 2;
+    
+
+    // Car related variables ---------------------------
+    private List<Participant> _participants = new List<Participant>();
+    private Vector3[] startingPositions;
+    private Quaternion[] startingRotations;
+    
+    // Timer variables ---------------------------------
+    [SerializeField] private float _countdownDuration = 3f;
+    private float _countdownTimer;
+    public float GameTimer => _gameTimer;
+    private float _gameTimer = 0f;
+    
+    // Game state -------------------------------------
     public enum GameState {
         Countdown,
         Running,
         End
     }
     private GameState _gameState = GameState.Countdown;
-    
-    // Car related variables
-    private List<Participant> _participants = new List<Participant>();
-    private Vector3[] startingPositions;
-    private Quaternion[] startingRotations;
-    
-    
-    [SerializeField] private float _countdownDuration = 3f;
-    private float _countdownTimer;
-    public float GameTimer => _gameTimer;
-    private float _gameTimer = 0f;
     
     private void Awake() {
         if (Instance != null) {
@@ -188,6 +195,11 @@ public class GameManager : MonoBehaviour {
     
     public List<Participant> GetParticipants() {
         return _participants;
+    }
+    
+    
+    public void SetLapsToWin(int laps) {
+        _lapsToWin = laps;
     }
     
     public void SetGameMode(GameMode gameMode) {

@@ -15,10 +15,9 @@ public class MapSettings : MonoBehaviour {
     }
 
     [SerializeField] private FacingDirection _facingDirection = FacingDirection.Up;
-    public int LapsToWin => _lapsToWin;
-    [SerializeField] private int _lapsToWin = 2;
+    [SerializeField] private Transform _startCellTransform;
     
-    Tilemap _raceTrackTileMap;
+    [SerializeField] Tilemap _raceTrackTileMap;
     private Vector3 _startCellCenterWorldPos;
     private Vector3Int _startCellCoords;
     private float _finishLineRotation;
@@ -30,8 +29,8 @@ public class MapSettings : MonoBehaviour {
         }
         Instance = this;
 
-        _raceTrackTileMap = GetComponentInParent<Tilemap>();
-        _startCellCoords = _raceTrackTileMap.WorldToCell(transform.position);
+        _raceTrackTileMap = GetComponent<Tilemap>();
+        _startCellCoords = _raceTrackTileMap.WorldToCell(_startCellTransform.position);
         _startCellCenterWorldPos = _raceTrackTileMap.GetCellCenterWorld(_startCellCoords);
         
         CreateFinishLine();
