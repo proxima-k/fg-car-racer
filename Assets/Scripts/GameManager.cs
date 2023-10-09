@@ -103,6 +103,12 @@ public class GameManager : MonoBehaviour {
         PlayerUI playerUI = Resources.Load<PlayerUI>("Prefabs/PlayerCanvas");
         playerUI = Instantiate(playerUI);
         playerUI.Initialize(_carControllers);
+
+        GameEndUI gameEndUI = Resources.Load<GameEndUI>("Prefabs/GameEndCanvas");
+        Instantiate(gameEndUI);
+
+        CountdownUI countdownUI = Resources.Load<CountdownUI>("Prefabs/CountdownCanvas");
+        Instantiate(countdownUI);
     }
 
     private void PlayerInitialization() {

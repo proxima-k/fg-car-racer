@@ -6,6 +6,7 @@ using UnityEngine;
 public class CarController : MonoBehaviour {
 
     public event EventHandler OnUsingFuel;
+    public event EventHandler OnNotUsingFuel;
     public event EventHandler<OnFuelChangedEventArgs> OnFuelChanged;
     public class OnFuelChangedEventArgs : EventArgs {
         public float fuelNormalized;
@@ -54,8 +55,10 @@ public class CarController : MonoBehaviour {
     }
 
     private void BurnFuel() {
-        if (_boostInput == 0 || !HasFuel())
+        if (_boostInput == 0 || !HasFuel()) {
+            OnNotUsingFuel?.Invoke(this, EventArgs.Empty);   
             return;
+        }
         
         _currentFuel -= _boostInput * _fuelBurnSpeed * Time.deltaTime;
         
@@ -63,7 +66,6 @@ public class CarController : MonoBehaviour {
             _currentFuel = 0;
         }
  
-        // play turbo animation
         OnUsingFuel?.Invoke(this, EventArgs.Empty);
         OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs{fuelNormalized = _currentFuel / _maxFuel});
     }
