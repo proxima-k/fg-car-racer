@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour {
                 if (_countdownTimer > 0) {
                     _countdownTimer -= Time.deltaTime;
                     OnCountdownTimerChanged?.Invoke(this, new OnCountdownTimerChangedEventArgs { time = _countdownTimer });
-                    Debug.Log(_countdownTimer);
                 }
                 else {
                     OnGameStart?.Invoke(this, EventArgs.Empty);

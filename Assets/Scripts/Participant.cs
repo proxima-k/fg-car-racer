@@ -14,8 +14,8 @@ public class Participant : MonoBehaviour {
     private bool _isCheating = false;
     private int _lapsCompleted = -1; // since they have to pass the finish line initially 
 
-    public void ToggleIsCheating() {
-        _isCheating = !_isCheating;
+    public void SetCheating(bool isCheating) {
+        _isCheating = isCheating;
     }
 
     public void AddLapCompleted() {
