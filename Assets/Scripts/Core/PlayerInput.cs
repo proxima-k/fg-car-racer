@@ -55,4 +55,5 @@ public class PlayerInput : MonoBehaviour {
 
     private void OnDisable() {
         _playerInputActions.Player.Disable();
-    } }
+    } 
+}
