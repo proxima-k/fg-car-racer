@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour {
-
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private GameObject _pauseUI;

@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b043356e9a1fb2948b151271afe05ca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameMode: 0
+  _lapsToWin: 1
+  _countdownDuration: 3

@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour {
                 break;
             
             default:
-                Logger.LogWarning("The game state shouldn't reach here!");
+                Utils.LogWarning("The game state shouldn't reach here!");
                 break;
         }
     }
@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour {
                 break;
                     
             default:
-                Logger.LogError("The game mode is not within the defined modes (Player Initialization)");
+                Utils.LogError("The game mode is not within the defined modes (Player Initialization)");
                 break;
         }
     }
@@ -196,10 +196,8 @@ public class GameManager : MonoBehaviour {
         return _participants;
     }
     
-    
     public void SetLapsToWin(int laps) {
         _lapsToWin = laps;
-        Debug.Log(_lapsToWin);
     }
     
     public void SetGameMode(GameMode gameMode) {
@@ -218,7 +216,7 @@ public class GameManager : MonoBehaviour {
     public void TogglePauseGame() {
         isGamePaused = !isGamePaused;
         
-        Logger.Log("Toggled pause game");
+        Utils.Log("Toggled pause game");
         if (isGamePaused) {
             Time.timeScale = 0f;
             OnGamePaused?.Invoke(this, EventArgs.Empty);

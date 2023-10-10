@@ -39,7 +39,7 @@ public class SceneHandler : MonoBehaviour {
     }
     
     private void SceneManager_OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode) {
-        Logger.Log(scene.name);
+        Utils.Log($"Loaded scene: {scene.name}");
         InitializeScene();
     }
     
@@ -51,14 +51,12 @@ public class SceneHandler : MonoBehaviour {
             // if the scene is a game scene
             if (scene.name == currentSceneName) {
                 if (GameManager.Instance == null) {
-                    Debug.Log("Game manager instance is null");
+                    Utils.Log("Game manager instance is null");
                     InstantiateGameManager();
                 }
 
                 if (_gameLoadedFromMenu) {
-                    // set game mode from scene handler
                     GameManager.Instance.SetGameMode(_gameMode);
-                    // set number of laps
                     GameManager.Instance.SetLapsToWin(_lapsToWin);
                     
                     _gameLoadedFromMenu = false;
@@ -69,7 +67,7 @@ public class SceneHandler : MonoBehaviour {
     }
     
     private void InstantiateGameManager() {
-        Logger.Log("Initializing a game manager for the game");
+        Utils.Log("Initializing a game manager for the game");
         // set game mode  
         GameManager gameManager = Resources.Load<GameManager>("Prefabs/GameManager");
         gameManager = Instantiate(gameManager);

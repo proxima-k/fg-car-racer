@@ -11,6 +11,7 @@ public class MainMenuUI : MonoBehaviour {
     private void Awake() {
         _playButton.onClick.AddListener(ShowMapSelectionMenu);
         _quitButton.onClick.AddListener(Application.Quit);
+        
     }
 
     private void Start() {

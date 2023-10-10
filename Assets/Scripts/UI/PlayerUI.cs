@@ -19,7 +19,7 @@ public class PlayerUI : MonoBehaviour {
         GameManager.Instance.OnGameTimerChanged += GameManager_OnGameTimerChanged;
         switch (participants.Count) {
             case 0:
-                Logger.LogError("There are no participants.");
+                Utils.LogError("There are no participants.");
                 return;
             case 1:
                 participants[0].GetComponent<CarController>().OnFuelChanged += Player1_OnFuelChanged;
@@ -36,7 +36,7 @@ public class PlayerUI : MonoBehaviour {
                 
                 break;
             default:
-                Logger.LogWarning("There are extra participants in the game.");
+                Utils.LogWarning("There are extra participants in the game.");
                 break;
         }
     }

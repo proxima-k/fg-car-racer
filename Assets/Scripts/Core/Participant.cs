@@ -42,6 +42,6 @@ public class Participant : MonoBehaviour {
 
     public void AddLapCompleted() {
         _lapsCompleted++;
-        Logger.Log($"Lap Completed: {_lapsCompleted}");
+        Utils.Log($"{Name} -- Laps Completed: {_lapsCompleted}");
     }
 }

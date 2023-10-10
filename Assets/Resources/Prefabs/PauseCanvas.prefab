@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3192817698149858445}
   - component: {fileID: 2883232732237077403}
   - component: {fileID: 867237008403150702}
-  - component: {fileID: 8009410425341866980}
+  - component: {fileID: 1013071058017851824}
   m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8009410425341866980
+--- !u!114 &1013071058017851824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

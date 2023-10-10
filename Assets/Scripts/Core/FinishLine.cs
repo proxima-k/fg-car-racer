@@ -25,7 +25,7 @@ public class FinishLine : MonoBehaviour {
             float dotProduct = Vector2.Dot(transform.up, contactToCenterDirection);
             
             if (dotProduct < 0) {
-                Logger.Log("A participant is cheating");
+                Utils.Log("A participant is cheating");
                 participant.SetCheating(true);
             }
             else {
