@@ -12,7 +12,7 @@ public class PlayerInput : MonoBehaviour {
         GameManager.Instance.OnGameRestart += GameManager_OnGameRestart;
         GameManager.Instance.OnGameEnd += GameManager_OnGameRestart;
     }
-
+    
     private void GameManager_OnGameRestart(object sender, EventArgs e) {
         DisableInput();
     }
