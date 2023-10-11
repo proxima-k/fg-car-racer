@@ -3,7 +3,6 @@ Wanna race solo or with a friend? Here is a game for you!
 This is a small racing game with 3 maps you could play. Boost your way to the end with fuels! 
 
 
-<br><br/>
 # 🏎️ Gameplay
 Try out the game, turbo included! 🔥
 <br>
