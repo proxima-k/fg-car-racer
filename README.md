@@ -34,12 +34,19 @@ Try out the game, turbo included! 🔥
 # 🎮 Playing The Game
 ### How to load the game
 Currently there are no builds for the game. The game can only be played within the Unity Editor.  
-Requirements:
+**Requirements**:
 - Unity Editor version 2022.3.10f1 LTS.
 - Packages used:
     - Input System 1.7.0 (From Unity Registry)
 
-Additional details:
+**Steps**:
+1. Clone the repository to a local folder in your computer.
+2. In Unity Hub, add the project folder.
+3. Open the project.
+4. Once loaded, open any scene in the Assets/Scenes folder and you're good to go!
+
+
+**Additional details**:
 - There's currently only 1 main menu scene and 3 game scenes. They are located in the [Assets/Scenes](https://github.com/proxima-k/fg-car-racer/tree/main/Assets/Scenes) directory.
 - The project is structured in a way which you can start playing in whichever scene you load
     - If you are starting the game in one of the game scenes instead of the main menu scene, the game scene needs to have a game manager prefab that contains settings you can alter like _**game mode**_ and _**number of laps to win**_.
