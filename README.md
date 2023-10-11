@@ -93,18 +93,18 @@ From there, the scripts are organized into different folders.
     - The UI remains unaffected since the delegates are still the same.
 
 ### Other considerations
-Here are some of the topics that I didn't get to explore much.
+Here are some of the topics that I didn't get to explore much but hope to in the future.
 - Checkpoint system
     - I hope to have something that helps with checking the ranks of the cars in real time.
 - Rebinding keys for players
     - Since the new input system has so much to offer, I actually spent a few hours studying the documentation to try implementing rebinding.
     - Alas, I have to prioritize finishing the project.
-    - I am excited to learn more about it in the future and utilize it.
 - Separate car stats like acceleration, max speed, steering from the [CarController](https://github.com/proxima-k/fg-car-racer/blob/main/Assets/Scripts/Core/CarController.cs)
     - I can then make them upgradable if the project grows.
 - Game Manager handling too much
     - It currently handles the state of the game, resetting stuff, and initializing & instantiating prefabs. Which makes it having many lines of code.
     - I think it would be wise to break them down for cleaner code.
+- Saved leaderboard
 
 ### Reflections
 - Discussing problems with friends definitely helped me look at it in different perspectives.
