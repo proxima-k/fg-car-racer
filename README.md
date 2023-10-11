@@ -79,11 +79,11 @@ From there, the scripts are organized into different folders.
 
 ### Finish line / Laps
 - I was planning to go with the checkout approach, which could also determine ranks during runtime.
-- Because of the project time constraints, I decided
-- I then switched to having a finish line that checks where the car is entering from and perform dot product.
+- But due to time constraints, I chose to implement the finish line
+- I came up with an algorithm that checks where the car is entering from and performs a dot product.
     - The dot product is calculated between the intended enter direction and the car's enter direction.
     - If the dot product is positive, then the car is not cheating.
-- Even though I lost the ability to do real time checking of ranks, I would only need a single finish line to determine winnings.
+- With this approach, I would only require a single collider instead of multiple checkpoints that has colliders.
 
 ### Separation of Logic and UI
 - One of my main goals in this project is to write clean code.
