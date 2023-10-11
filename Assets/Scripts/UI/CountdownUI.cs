@@ -7,7 +7,7 @@ public class CountdownUI : MonoBehaviour {
     [SerializeField] private GameObject _countdownUI;
     [SerializeField] private TextMeshProUGUI _countdownText;
 
-    private void Start() {
+    private void Awake() {
         GameManager.Instance.OnCountdownTimerChanged += GameManager_OnCountdownTimerChanged;
         GameManager.Instance.OnGameStart += GameManager_OnGameStart;
         GameManager.Instance.OnGameRestart += GameManager_OnGameRestart;

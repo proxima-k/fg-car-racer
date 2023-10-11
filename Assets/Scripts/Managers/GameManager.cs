@@ -67,8 +67,7 @@ public class GameManager : MonoBehaviour {
         // Initialize everything needed for the game
         PlayerInitialization();
         ScriptsInitialization();
-
-        _countdownTimer = _countdownDuration;
+        Restart();
     }
 
     private void Update() {
@@ -101,7 +100,6 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
-    
     
     private void ScriptsInitialization() {
         GameInput gameInput = Resources.Load<GameInput>("Prefabs/GameInput");
@@ -163,7 +161,7 @@ public class GameManager : MonoBehaviour {
                 participant = playerInput.GetComponent<Participant>();
                 participant.Name = "Player 2";
                 
-                participant.Initialize( startingPositions[1], startingRotations[1]);
+                participant.Initialize(startingPositions[1], startingRotations[1]);
                 
                 _participants.Add(participant);
                 break;
@@ -180,17 +178,10 @@ public class GameManager : MonoBehaviour {
         _countdownTimer = _countdownDuration;
         _gameTimer = 0f;
         
-        ResetParticipants();
-        
         OnGameRestart?.Invoke(this, EventArgs.Empty);
         OnGameTimerChanged?.Invoke(this, new OnGameTimerChangedEventArgs {time = _gameTimer});
     }
-
-    public void ResetParticipants() {
-        foreach (Participant participant in _participants) {
-            participant.Reset();
-        }
-    }
+    
     
     public List<Participant> GetParticipants() {
         return _participants;

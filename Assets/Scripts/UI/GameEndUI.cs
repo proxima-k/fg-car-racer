@@ -11,13 +11,10 @@ public class GameEndUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _timerText;
 
     private void Awake() {
-        Hide();
-    }
-
-    private void Start() {
         GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
         _mainMenuButton.onClick.AddListener(SceneHandler.Instance.LoadMainMenuScene);
         _againButton.onClick.AddListener(RestartGame);
+        Hide();
     }
 
     private void GameManager_OnGameEnd(object sender, GameManager.OnGameEndEventArgs e) {

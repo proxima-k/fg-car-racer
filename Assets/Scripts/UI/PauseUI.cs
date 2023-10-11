@@ -7,7 +7,7 @@ public class PauseUI : MonoBehaviour {
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private GameObject _pauseUI;
 
-    private void Start() {
+    private void Awake() {
         _resumeButton.onClick.AddListener(GameManager.Instance.TogglePauseGame);
         _mainMenuButton.onClick.AddListener(SceneHandler.Instance.LoadMainMenuScene);
         _mainMenuButton.onClick.AddListener(GameManager.Instance.TogglePauseGame);

@@ -10,12 +10,11 @@ public class GameInput : MonoBehaviour {
         _playerInputActions.General.Enable();
         
         _playerInputActions.General.PauseGame.performed += Player_OnPauseGame;
-    }
-
-    private void Start() {
+        
         GameManager.Instance.OnGameEnd += GameManager_OnGameEnd;
         GameManager.Instance.OnGameRestart += GameManager_OnGameRestart;
     }
+    
 
     private void GameManager_OnGameRestart(object sender, EventArgs e) {
         _playerInputActions.General.Enable();
