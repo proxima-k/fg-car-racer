@@ -6,8 +6,7 @@ This is a small racing game with 3 maps you could play. Boost your way to the en
 <br><br/>
 # 🏎️ Gameplay
 Try out the game, turbo included! 🔥
-Add gifs here
-
+<img alt="Racing gameplay" src="../../../fg-car-racer/blob/main/gifs/SnakeSnack.gif" height="450px">
 
 <br><br/>
 # ⚙️ Game mechanics
