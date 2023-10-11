@@ -41,7 +41,8 @@ public class Participant : MonoBehaviour {
         // resets position
         transform.position = _startingPosition;
         transform.rotation = _startingQuaternion;
-
+        
+        // resets laps completed
         _lapsCompleted = -1;
         OnLapCompleted?.Invoke(this, new OnLapCompleteEventArgs { lapsCompleted = LapsCompleted });
     }

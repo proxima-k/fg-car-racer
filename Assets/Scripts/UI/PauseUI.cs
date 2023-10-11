@@ -32,12 +32,4 @@ public class PauseUI : MonoBehaviour {
     private void Hide() {
         _pauseUI.SetActive(false);
     }
-
-    private void OnDestroy() {
-        _resumeButton.onClick.RemoveListener(GameManager.Instance.TogglePauseGame);
-        _mainMenuButton.onClick.RemoveListener(SceneHandler.Instance.LoadMainMenuScene);
-        _mainMenuButton.onClick.RemoveListener(GameManager.Instance.TogglePauseGame);
-        GameManager.Instance.OnGamePaused -= GameManager_OnGamePaused;
-        GameManager.Instance.OnGameUnpaused -= GameManager_OnGameUnpaused;
-    }
 }

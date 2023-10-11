@@ -2,6 +2,7 @@
 using UnityEngine;
 #endif
 
+// general utility functions for the game
 public static class Utils {
     public static string FormatTime(float timeInSeconds) {
         int minute = (int)(timeInSeconds / 60);

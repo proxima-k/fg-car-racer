@@ -46,7 +46,6 @@ public class PlayerUI : MonoBehaviour {
             default:
                 Utils.LogWarning("There are extra participants in the game.");
                 break;
-            // subscribe to OnLapComplete
         }
     }
     

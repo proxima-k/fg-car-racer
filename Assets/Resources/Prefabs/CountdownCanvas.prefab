@@ -161,7 +161,7 @@ RectTransform:
   m_GameObject: {fileID: 3118971557354238576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.575, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4665679344896293706}
@@ -326,6 +326,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _countdownUI: {fileID: 5364528043204589007}
   _countdownText: {fileID: 137598723560746954}
+  _backgroundImage: {fileID: 6809026792381858335}
+  _fadeDuration: 1.5
 --- !u!1 &5364528043204589007
 GameObject:
   m_ObjectHideFlags: 0

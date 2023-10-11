@@ -44,7 +44,6 @@ public class MapSelectionUI : MonoBehaviour {
     }
 
     private void Start() {
-        // create buttons
         foreach (Object scene in _gameSettings.gameScenes) {
             CreateMapButton(scene.name);
         }
