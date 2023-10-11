@@ -93,6 +93,7 @@ From there, the scripts are organized into different folders.
     - The dot product is calculated between the intended enter direction and the car's enter direction.
     - If the dot product is positive, then the car is not cheating.
 - With this approach, I would only require a single collider instead of multiple checkpoints that has colliders.
+- Additionally, I had a MapSettings script that automatically generates a finish line depending on the settings, which doesn't require placing a finish line manually.
 
 ### Separation of Logic and UI
 - One of my main goals in this project is to write clean code.
@@ -115,6 +116,8 @@ Here are some of the topics that I didn't get to explore much but hope to in the
     - It currently handles the state of the game, resetting stuff, and initializing & instantiating prefabs. Which makes it having many lines of code.
     - I think it would be wise to break them down for cleaner code.
 - Leaderboard system
+- Modular participant system
+    - I'm currently hard coding players into the game, but it would be nice to refactor the code to enable adding cars regardless if it's a player or a bot.
 
 ### Reflections
 - Discussing problems with friends definitely helped me look at them in different perspectives.
