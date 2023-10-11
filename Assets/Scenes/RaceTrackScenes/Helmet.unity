@@ -2246,6 +2246,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 8754166646129559259, guid: 7df32e5f132292e4bb5becb30f2f9ccb, type: 3}
+      propertyPath: _gameMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754166646129559259, guid: 7df32e5f132292e4bb5becb30f2f9ccb, type: 3}
       propertyPath: _lapsToWin
       value: 1
       objectReference: {fileID: 0}
