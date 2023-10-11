@@ -41,6 +41,7 @@ Additional details:
     - If you are starting the game in one of the game scenes instead of the main menu scene, the game scene needs to have a game manager prefab that contains settings you can alter like _**game mode**_ and _**number of laps to win**_.
     - Otherwise, the game will start with the default settings defined within the script.
 
+<br><br/>
 ### Player Controls
 There are currently two modes in the game: **One Player**, **Two Player**
 | Actions | One Player | Two Player (Player 1) | Two Player (Player 2) |
