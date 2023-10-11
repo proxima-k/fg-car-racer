@@ -1,5 +1,6 @@
 # 📄 About
-Wanna race solo or with a friend? Here is a game for you! This is a small racing game with 3 maps you could play. Boost your way to the end with fuels! 
+Wanna race solo or with a friend? Here is a game for you!  
+This is a small racing game with 3 maps you could play. Boost your way to the end with fuels! 
 
 
 <br><br/>
@@ -37,9 +38,8 @@ Requirements:
 Additional details:
 - There's currently only 1 main menu scene and 3 game scenes. They are located in the [Assets/Scenes](https://github.com/proxima-k/fg-car-racer/tree/main/Assets/Scenes) directory.
 - The project is structured in a way which you can start playing in whichever scene you load
-    - As long as the scene contains RaceTrackTileMap and some other stuff (EDIT THIS)
-    - If you are starting the game in one of the game scenes instead of the main menu scene, the game scene needs to have a game manager prefab that contains settings you can alter like game modes, and number of laps to win. (EDIT THIS)
-
+    - If you are starting the game in one of the game scenes instead of the main menu scene, the game scene needs to have a game manager prefab that contains settings you can alter like _**game mode**_ and _**number of laps to win**_.
+    - Otherwise, the game will start with the default settings defined within the script.
 
 ### Player Controls
 There are currently two modes in the game: **One Player**, **Two Player**
@@ -62,12 +62,63 @@ From there, the scripts are organized into different folders.
 
 <br><br/>
 # 💭 Thought process / Lessons
+### Project flow & initialization
+- After learning about it. I attemped to implement a system where I could start racing within a racing scene without the need to load the main menu scene.
+- If any user wants to play in a different mode and with a different number of laps to win, they could just drag a GameManager prefab to the scene and edit the values of the script attached to it.
+    - You can locate the GameManager prefab in the Unity Editor project window with the path of [Assets/Resources/Prefabs/](https://github.com/proxima-k/fg-car-racer/tree/main/Assets/Resources/Prefabs)
+- With this approach, I will only need a GameManager (Link to code) prefab added to a racing scene and change the game mode or the number of laps to win. 
+- This makes editing and playtesting the map much easier compared to loading the scene from main menu every time the game is run in the editor.
 
+### Car physics
+- I had some idea about using vectors but wasn't sure how to implement it.
+- I then got the ideas solidified after watching a video on Youtube describing about how car physics work.
+- Since I had a good foundation in physics and linear algebra, it is easier to implement.
+- I simplified the individual wheels physics into a single entity so that it's easier to implement.
+
+### Finish line / Laps
+- I was planning to go with the checkout approach, which could also determine ranks during runtime.
+- Because of the project time constraints, I decided
+- I then switched to having a finish line that checks where the car is entering from and perform dot product.
+    - The dot product is calculated between the intended enter direction and the car's enter direction.
+    - If the dot product is positive, then the car is not cheating.
+- Even though I lost the ability to do real time checking of ranks, I would only need a single finish line to determine winnings.
+
+### Separation of Logic and UI
+- One of my main goals in this project is to write clean code.
+- So I used delegates for all kinds of events. With this, I can have UI scripts connect to the delegates that are within the manager scripts without the manager scripts knowing about them.
+- Because of this separation, it made it so much easier to refactor some logics within the scripts.
+    - Initially, I had the [GameManager](https://github.com/proxima-k/fg-car-racer/blob/main/Assets/Scripts/Managers/GameManager.cs) keep track of [CarController](https://github.com/proxima-k/fg-car-racer/blob/main/Assets/Scripts/Core/CarController.cs)s and perform methods on them. This didn't make sense as CarController means controlling the car movements, not resetting their positions or keeping track of laps passed.
+    - I then refactored it to track a new script, [Participant](https://github.com/proxima-k/fg-car-racer/blob/main/Assets/Scripts/Core/Participant.cs) which contains functions that handles in-game requirements.
+    - The UI remains unaffected since the delegates are still the same.
+
+### Other considerations
+Here are some of the topics that I didn't get to explore much.
+- Checkpoint system
+    - I hope to have something that helps with checking the ranks of the cars in real time.
+- Rebinding keys for players
+    - Since the new input system has so much to offer, I actually spent a few hours studying the documentation to try implementing rebinding.
+    - Alas, I have to prioritize finishing the project.
+    - I am excited to learn more about it in the future and utilize it.
+- Separate car stats like acceleration, max speed, steering from the [CarController](https://github.com/proxima-k/fg-car-racer/blob/main/Assets/Scripts/Core/CarController.cs)
+    - I can then make them upgradable if the project grows.
+- Game Manager handling too much
+    - It currently handles the state of the game, resetting stuff, and initializing & instantiating prefabs. Which makes it having many lines of code.
+    - I think it would be wise to break them down for cleaner code.
+
+### Reflections
+- Discussing problems with friends definitely helped me look at it in different perspectives.
+- It felt very rewarding to have a codebase that is decoupled to some extent. It makes expanding the project less exhausting.
+- I now understand more about writing clean code
 
 
 <br><br/>
 # 🗃️ Resources
-Here are the resources that helped me in the making of this project:
+Here are resources that helped me in the making of this project:  
+- [A Youtube video](https://www.youtube.com/watch?v=CdPYlj5uZeI&pp=ygULY2FyIHBoeXNpY3M%3D) about car physics that got me started on understanding how cars work.
+- Unity Forum, StackOverflow helped me with solving some issues that I don't understand when it comes to the Editor itself.
+    - E.g. I can't have a serialized field of a Scene and I had to use the Object class as a serialized field to be able to assign a scene in the inspector.
+- A lot of the concepts I've implemented are already learnt prior to this project and it's all thanks to the great [CodeMonkey](https://www.youtube.com/@CodeMonkeyUnity)!
+
 
 <br><br/>
 Developed by Kent Chua
