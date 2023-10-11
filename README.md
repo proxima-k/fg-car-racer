@@ -43,7 +43,8 @@ Currently there are no builds for the game. The game can only be played within t
 1. Clone the repository to a local folder in your computer.
 2. In Unity Hub, add the project folder.
 3. Open the project.
-4. Once loaded, open any scene in the Assets/Scenes folder and you're good to go!
+4. Once loaded, open any scene in the Assets/Scenes folder.
+5. Open the game view window, press play and you're good to go! 
 
 
 **Additional details**:
