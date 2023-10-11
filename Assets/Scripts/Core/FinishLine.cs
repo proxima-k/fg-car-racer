@@ -40,7 +40,6 @@ public class FinishLine : MonoBehaviour {
                 
                 // if laps completed is equal to the required
                 // trigger end game
-                // GameManager.Instance.TriggerEndGame
                 if (!_hasWinner && participant.LapsCompleted >= GameManager.Instance.LapsToWin) {
                     GameManager.Instance.TriggerEndGame(participant);
                     _hasWinner = true;
@@ -56,6 +55,9 @@ public class FinishLine : MonoBehaviour {
 
             if (dotProduct >= 0) {
                 participant.SetCheating(false);
+            }
+            else {
+                participant.SetCheating(true);
             }
             
         }
