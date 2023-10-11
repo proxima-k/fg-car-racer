@@ -26,7 +26,7 @@ Try out the game, turbo included! 🔥
 5. Players race.
     - Players can do pickups to gain fuel
     - Players can use fuels to boost their speed
-6. Players win when they reach the finish line.
+6. The first to complete enough laps wins!
 7. Choose to play again or go back to Main Menu.
 
 
