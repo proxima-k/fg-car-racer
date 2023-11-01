@@ -37,7 +37,7 @@ public class MapSettings : MonoBehaviour {
     }
 
 
-    // create a finishing line in front
+    // creates a finishing line in front of the starting cell
     private void CreateFinishLine() {
 
         Vector3Int coordFromStart = Vector3Int.zero;
@@ -69,6 +69,7 @@ public class MapSettings : MonoBehaviour {
         finishLine.transform.SetParent(_raceTrackTileMap.transform, true);
     }
     
+    // provides starting positions for cars
     public Vector3[] GetStartingPositions() {
         Vector3[] carStartingPositions = new Vector3[2];
         
@@ -85,6 +86,7 @@ public class MapSettings : MonoBehaviour {
         return carStartingPositions;
     }
 
+    // provides starting rotations for cars
     public Quaternion[] GetStartingRotations() {
         Quaternion[] carStartingRotations = new Quaternion[2];
 

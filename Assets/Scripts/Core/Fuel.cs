@@ -11,7 +11,7 @@ public class Fuel : MonoBehaviour {
     private float _timer = 0;
     private bool _onCooldown = false;
 
-    private void Start() {
+    private void Awake() {
         _body.GetComponent<SpriteRenderer>().color = _fuelSO.SpriteColor;
     }
 
@@ -25,8 +25,6 @@ public class Fuel : MonoBehaviour {
                 Show();
             }
         }
-        
-        // rotate
     }
 
     private void OnValidate() {

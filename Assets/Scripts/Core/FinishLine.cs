@@ -25,22 +25,19 @@ public class FinishLine : MonoBehaviour {
             float dotProduct = Vector2.Dot(transform.up, contactToCenterDirection);
             
             if (dotProduct < 0) {
+                // entering from the wrong direction
                 Utils.Log("A participant is cheating");
                 participant.SetCheating(true);
             }
             else {
-                // if player wasn't cheating
-                // add a lap to the player
                 if (participant.IsCheating) {
                     participant.SetCheating(false);
                     return;
                 }
                 
+                // if participant isn't cheating
                 participant.AddLapCompleted();
                 
-                // if laps completed is equal to the required
-                // trigger end game
-                // GameManager.Instance.TriggerEndGame
                 if (!_hasWinner && participant.LapsCompleted >= GameManager.Instance.LapsToWin) {
                     GameManager.Instance.TriggerEndGame(participant);
                     _hasWinner = true;
@@ -56,6 +53,9 @@ public class FinishLine : MonoBehaviour {
 
             if (dotProduct >= 0) {
                 participant.SetCheating(false);
+            }
+            else {
+                participant.SetCheating(true);
             }
             
         }

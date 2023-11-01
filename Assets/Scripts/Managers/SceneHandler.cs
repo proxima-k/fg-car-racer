@@ -6,7 +6,7 @@ public class SceneHandler : MonoBehaviour {
     
     private GameSettings _gameSettings;
     private GameMode _gameMode;
-    private int _lapsToWin;
+    private int _lapsToWin = 1;
     private bool _gameLoadedFromMenu;
     
     private void Awake() {
@@ -51,7 +51,7 @@ public class SceneHandler : MonoBehaviour {
             // if the scene is a game scene
             if (scene.name == currentSceneName) {
                 if (GameManager.Instance == null) {
-                    Utils.Log("Game manager instance is null");
+                    Utils.Log($"No existing game manager, creating a new one with default mode: <{_gameMode}> and default number of laps to win: <{_lapsToWin}>");
                     InstantiateGameManager();
                 }
 
@@ -68,9 +68,10 @@ public class SceneHandler : MonoBehaviour {
     
     private void InstantiateGameManager() {
         Utils.Log("Initializing a game manager for the game");
-        // set game mode  
+
         GameManager gameManager = Resources.Load<GameManager>("Prefabs/GameManager");
         gameManager = Instantiate(gameManager);
         gameManager.SetGameMode(_gameMode);
+        gameManager.SetLapsToWin(_lapsToWin);
     }
 }

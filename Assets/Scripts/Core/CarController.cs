@@ -83,15 +83,17 @@ public class CarController : MonoBehaviour {
         OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuelNormalized = _currentFuel / _maxFuel});
     }
 
-    public void Reset() {
-        _currentFuel = _startingFuel;
-        _carRigidBody2D.velocity = Vector2.zero;
-        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuelNormalized = _currentFuel / _maxFuel});
-    }
-    
     private bool HasFuel() {
         return _currentFuel > 0;
     }
+    
+    public void Reset() {
+        _carRigidBody2D.velocity = Vector2.zero;
+        
+        _currentFuel = _startingFuel;
+        OnFuelChanged?.Invoke(this, new OnFuelChangedEventArgs {fuelNormalized = _currentFuel / _maxFuel});
+    }
+    
     
     private void Accelerate() {
         float totalMaxSpeed = _maxSpeed;
@@ -111,7 +113,7 @@ public class CarController : MonoBehaviour {
     }
 
     private void Steer() {
-        // to prevent rotating the car when the car isn't moving
+        // to scale steering strength according to car's speed
         float steerMagnitude = 7f;
         float velocityToSteerRatio = _carRigidBody2D.velocity.magnitude / steerMagnitude;
         

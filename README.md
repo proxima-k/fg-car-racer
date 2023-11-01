@@ -3,7 +3,6 @@ Wanna race solo or with a friend? Here is a game for you!
 This is a small racing game with 3 maps you could play. Boost your way to the end with fuels! 
 
 
-<br><br/>
 # 🏎️ Gameplay
 Try out the game, turbo included! 🔥
 <br>
@@ -20,30 +19,40 @@ Try out the game, turbo included! 🔥
 
 <br><br/>
 # 🔁 Game loop
-1. Game starts.
-2. Countdown begins.
-3. Players race.
+1. Select mode and number of laps in Main Menu.
+2. Choose a map.
+3. Scene loads.
+4. Countdown begins.
+5. Players race.
     - Players can do pickups to gain fuel
     - Players can use fuels to boost their speed
-6. Players win when they reach the finish line. 
+6. The first to complete enough laps wins!
+7. Choose to play again or go back to Main Menu.
 
 
 <br><br/>
 # 🎮 Playing The Game
 ### How to load the game
 Currently there are no builds for the game. The game can only be played within the Unity Editor.  
-Requirements:
-- Unity Editor version 2022.3.8f1 LTS.
+**Requirements**:
+- Unity Editor version 2022.3.10f1 LTS.
 - Packages used:
     - Input System 1.7.0 (From Unity Registry)
 
-Additional details:
+**Steps**:
+1. Clone the repository to a local folder in your computer.
+2. In Unity Hub, add the project folder.
+3. Open the project.
+4. Once loaded, open any scene in the Assets/Scenes folder.
+5. Open the game view window, press play and you're good to go! 
+
+
+**Additional details**:
 - There's currently only 1 main menu scene and 3 game scenes. They are located in the [Assets/Scenes](https://github.com/proxima-k/fg-car-racer/tree/main/Assets/Scenes) directory.
 - The project is structured in a way which you can start playing in whichever scene you load
     - If you are starting the game in one of the game scenes instead of the main menu scene, the game scene needs to have a game manager prefab that contains settings you can alter like _**game mode**_ and _**number of laps to win**_.
     - Otherwise, the game will start with the default settings defined within the script.
 
-<br><br/>
 ### Player Controls
 There are currently two modes in the game: **One Player**, **Two Player**
 | Actions | One Player | Two Player (Player 1) | Two Player (Player 2) |
@@ -68,23 +77,23 @@ From there, the scripts are organized into different folders.
 ### Project flow & initialization
 - After learning about it. I attemped to implement a system where I could start racing within a racing scene without the need to load the main menu scene.
 - If any user wants to play in a different mode and with a different number of laps to win, they could just drag a GameManager prefab to the scene and edit the values of the script attached to it.
-    - You can locate the GameManager prefab in the Unity Editor project window with the path of [Assets/Resources/Prefabs/](https://github.com/proxima-k/fg-car-racer/tree/main/Assets/Resources/Prefabs)
-- With this approach, I will only need a GameManager (Link to code) prefab added to a racing scene and change the game mode or the number of laps to win. 
+    - You can locate the GameManager prefab in the Unity Editor project window with the path [Assets/Resources/Prefabs/](https://github.com/proxima-k/fg-car-racer/tree/main/Assets/Resources/Prefabs)
 - This makes editing and playtesting the map much easier compared to loading the scene from main menu every time the game is run in the editor.
 
 ### Car physics
 - I had some idea about using vectors but wasn't sure how to implement it.
-- I then got the ideas solidified after watching a video on Youtube describing about how car physics work.
-- Since I had a good foundation in physics and linear algebra, it is easier to implement.
-- I simplified the individual wheels physics into a single entity so that it's easier to implement.
+- I then got the ideas solidified after watching a [video on Youtube](https://www.youtube.com/watch?v=CdPYlj5uZeI&pp=ygULY2FyIHBoeXNpY3M%3D) describing about how car physics work.
+- Since I have a good foundation in physics and linear algebra, it is easier to implement.
+- I simplified the individual wheels physics into a single entity to meet the project goals.
 
 ### Finish line / Laps
 - I was planning to go with the checkout approach, which could also determine ranks during runtime.
-- Because of the project time constraints, I decided
-- I then switched to having a finish line that checks where the car is entering from and perform dot product.
+- But due to time constraints, I chose to only implement the finish line
+- I came up with an algorithm that checks where the car is entering from and performs a dot product.
     - The dot product is calculated between the intended enter direction and the car's enter direction.
     - If the dot product is positive, then the car is not cheating.
-- Even though I lost the ability to do real time checking of ranks, I would only need a single finish line to determine winnings.
+- With this approach, I would only require a single collider instead of multiple checkpoints that has colliders.
+- Additionally, I had a MapSettings script that automatically generates a finish line depending on the settings, which doesn't require placing a finish line manually.
 
 ### Separation of Logic and UI
 - One of my main goals in this project is to write clean code.
@@ -106,12 +115,14 @@ Here are some of the topics that I didn't get to explore much but hope to in the
 - Game Manager handling too much
     - It currently handles the state of the game, resetting stuff, and initializing & instantiating prefabs. Which makes it having many lines of code.
     - I think it would be wise to break them down for cleaner code.
-- Saved leaderboard
+- Leaderboard system
+- Modular participant system
+    - I'm currently hard coding players into the game, but it would be nice to refactor the code to enable adding cars regardless if it's a player or a bot.
 
 ### Reflections
-- Discussing problems with friends definitely helped me look at it in different perspectives.
+- Discussing problems with friends definitely helped me look at them in different perspectives.
+- I now understand more about writing clean code and why it's important.
 - It felt very rewarding to have a codebase that is decoupled to some extent. It makes expanding the project less exhausting.
-- I now understand more about writing clean code
 
 
 <br><br/>

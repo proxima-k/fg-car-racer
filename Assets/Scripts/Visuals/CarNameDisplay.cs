@@ -31,7 +31,7 @@ public class CarNameDisplay : MonoBehaviour {
     }
 
     private void Update() {
-        // rotate in opposite direction of parent
+        // keeps the name tag upright when the parent transform (Car) rotates
         Quaternion quaternion = Quaternion.Euler(0, 0, -rootTransform.eulerAngles.z);
         transform.localRotation = quaternion;
     }

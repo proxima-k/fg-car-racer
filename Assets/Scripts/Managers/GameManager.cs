@@ -29,23 +29,27 @@ public class GameManager : MonoBehaviour {
         public float time;
     }
     
+    
     // Game settings -----------------------------------
     public GameMode GameMode => _gameMode;
     [SerializeField] private GameMode _gameMode = GameMode.OnePlayer;
     
     public int LapsToWin => _lapsToWin;
-    [SerializeField] private int _lapsToWin = 2;
+    [SerializeField] private int _lapsToWin = 1;
+    
     
     // Car related variables ---------------------------
     private List<Participant> _participants = new List<Participant>();
     private Vector3[] startingPositions;
     private Quaternion[] startingRotations;
     
+    
     // Timer variables ---------------------------------
     [SerializeField] private float _countdownDuration = 3f;
     private float _countdownTimer;
     public float GameTimer => _gameTimer;
     private float _gameTimer = 0f;
+    
     
     // Game state -------------------------------------
     public enum GameState {
@@ -81,19 +85,18 @@ public class GameManager : MonoBehaviour {
                     OnGameStart?.Invoke(this, EventArgs.Empty);
                     _gameState = GameState.Running;
                 }
-                
                 break;
             
-            // Game running
+            
             case GameState.Running:
-                // timer
                 _gameTimer += Time.deltaTime;
                 OnGameTimerChanged?.Invoke(this, new OnGameTimerChangedEventArgs { time = _gameTimer});
                 break;
             
-            // When someone wins, display UI for stats
+            
             case GameState.End:
                 break;
+            
             
             default:
                 Utils.LogWarning("The game state shouldn't reach here!");
