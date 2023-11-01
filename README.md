@@ -33,7 +33,7 @@ Try out the game, turbo included! 🔥
 ### How to load the game
 Currently there are no builds for the game. The game can only be played within the Unity Editor.  
 Requirements:
-- Unity Editor version 2022.3.10f1 LTS.
+- Unity Editor version 2022.3.8f1 LTS.
 - Packages used:
     - Input System 1.7.0 (From Unity Registry)
 
